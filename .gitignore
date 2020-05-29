@@ -1,5 +1,6 @@
-obj/*
-bin/*
+
+*/obj/*
+*/bin/*
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
@@ -10,7 +11,7 @@ bin/*
 /bazel-out
 
 # dependencies
-ClientApp/node_modules/*
+*/ClientApp/node_modules/*
 
 
 # profiling files
@@ -27,14 +28,14 @@ speed-measure-plugin*.json
 *.sublime-workspace
 
 # IDE - VSCode
-.vscode/*
+*/.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
 
-.vs/*
+*/.vs/*
 
 # misc
 /.sass-cache
