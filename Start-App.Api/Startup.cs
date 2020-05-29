@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Start_App.Data;
 
 namespace Start_App
 {
@@ -26,6 +27,13 @@ namespace Start_App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //services.AddDbContext<SqlServerDbContext>(options =>
+            //{
+
+            //});
+            services.AddSwaggerDocument();
+
             services.AddControllers();
             services.AddSpaStaticFiles(configuration =>
             {
@@ -48,6 +56,9 @@ namespace Start_App
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
