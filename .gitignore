@@ -35,7 +35,7 @@ speed-measure-plugin*.json
 !.vscode/extensions.json
 .history/*
 
-*/.vs/*
+.vs/*
 
 # misc
 /.sass-cache
