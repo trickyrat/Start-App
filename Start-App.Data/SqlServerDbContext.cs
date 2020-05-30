@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// Copyright (c) Trickyrat All Rights Reserved.
+// Licensed under the MIT LICENSE.
+
+using Microsoft.EntityFrameworkCore;
 using Start_App.Domains.Entities;
 
 namespace Start_App.Data

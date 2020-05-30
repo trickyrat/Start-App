@@ -1,4 +1,7 @@
-﻿namespace Start_App.Domains.Entities
+﻿// Copyright (c) Trickyrat All Rights Reserved.
+// Licensed under the MIT LICENSE.
+
+namespace Start_App.Domains.Entities
 {
     public class Person
     {

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿// Copyright (c) Trickyrat All Rights Reserved.
+// Licensed under the MIT LICENSE.
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Start_App.Domains.Entities;
 using System.Collections.Generic;
