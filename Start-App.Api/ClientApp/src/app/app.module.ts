@@ -11,6 +11,10 @@ import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { PersonService } from './person/person.service';
 import { InformationComponent } from './person/information/information.component';
+import { HeroformComponent } from './heroform/heroform.component';
+import { HttpErrorHandler } from './http-error-handler.service';
+import { MessageService } from './message.service';
+import { RequestCache, RequestCacheWithMap } from './request-cache.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,8 @@ import { InformationComponent } from './person/information/information.component
     PersonListComponent,
     HomeComponent,
     NavMenuComponent,
-    InformationComponent
+    InformationComponent,
+    HeroformComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,13 @@ import { InformationComponent } from './person/information/information.component
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [PersonService],
+  providers: [
+    PersonService,
+    HttpErrorHandler,
+    MessageService,
+    { provide: RequestCache, useClass: RequestCacheWithMap },
+    //httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

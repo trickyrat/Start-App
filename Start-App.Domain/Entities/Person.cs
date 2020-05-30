@@ -1,8 +1,8 @@
-﻿namespace Start_App.Domain
+﻿namespace Start_App.Domains.Entities
 {
     public class Person
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
     }
 }

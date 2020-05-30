@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Start_App.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Start_App
 {
@@ -28,10 +29,10 @@ namespace Start_App
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddDbContext<SqlServerDbContext>(options =>
-            //{
-
-            //});
+            services.AddDbContext<SqlServerDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("LocalDBString"));
+            });
             services.AddSwaggerDocument();
 
             services.AddControllers();
