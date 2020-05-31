@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Start_App.Service
 {
-    public interface IPerssonRepository
+    public interface IPersonRepository
     {
 
     }

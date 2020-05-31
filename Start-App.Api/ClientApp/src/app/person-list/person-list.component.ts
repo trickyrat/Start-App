@@ -10,6 +10,8 @@ import { Person } from '../models/Person';
 export class PersonListComponent {
   people: Person[];
   constructor(personService: PersonService) {
-    this.people = personService.getPeople();
+    personService.getPeople().subscribe(result => {
+      this.people = result
+    }, error => { console.log(error) });
   }
 }

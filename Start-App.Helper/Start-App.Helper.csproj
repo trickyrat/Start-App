@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Start_App.Domain</RootNamespace>
+    <RootNamespace>Start_App.Helper</RootNamespace>
   </PropertyGroup>
 
 </Project>

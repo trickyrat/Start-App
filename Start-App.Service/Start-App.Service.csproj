@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Start-App.Data\Start-App.Data.csproj" />
     <ProjectReference Include="..\Start-App.Domain\Start-App.Domain.csproj" />
+    <ProjectReference Include="..\Start-App.Helper\Start-App.Helper.csproj" />
   </ItemGroup>
 
 </Project>

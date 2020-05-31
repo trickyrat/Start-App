@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { Person } from '../models/Person';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-import { throwError, Observable } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { HandleError, HttpErrorHandler } from '../http-error-handler.service';
 
 const httpOptions = {

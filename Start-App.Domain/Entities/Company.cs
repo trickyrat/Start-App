@@ -3,11 +3,24 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace Start_App.Domain.Entities
 {
-    class Company
+    public class Company
     {
+        public Guid Id { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string Name { get; set; }
+
+        [MaxLength(500)]
+        public string Introduction { get; set; }
+        public string Country { get; set; }
+        public string Industry { get; set; }
+        public string Product { get; set; }
+
+        public ICollection<Employee> Employees { get; set; }
     }
 }

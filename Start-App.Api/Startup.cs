@@ -16,6 +16,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Start_App.Data;
 using Microsoft.EntityFrameworkCore;
+using Start_App.Service;
+using AutoMapper;
+using System.Reflection;
 
 namespace Start_App
 {
@@ -28,14 +31,24 @@ namespace Start_App
 
         public IConfiguration Configuration { get; }
 
+        private static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name &&
+                                                   level == (LogLevel.Information | LogLevel.Error | LogLevel.Warning | LogLevel.Debug))
+            .AddConsole();
+        });
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddDbContext<SqlServerDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("LocalDBString"));
+                options.UseLoggerFactory(_loggerFactory)
+                       .UseSqlServer(Configuration.GetConnectionString("LocalDBString"));
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerDocument();
 
             services.AddControllers();
