@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Start_App.Data;
 using Start_App.Domain.Entities;
+using Start_App.Domain.RquestParameter;
 using Start_App.Helper;
 
 namespace Start_App.Service
@@ -26,14 +27,14 @@ namespace Start_App.Service
             company.Id = Guid.NewGuid();
             foreach (var employee in company.Employees)
             {
-                employee.Id = Guid.NewGuid(); 
+                employee.Id = Guid.NewGuid();
             }
             _context.Companies.Add(company);
         }
 
         public void AddEmployee(Guid companyId, Employee employee)
         {
-            if(companyId == Guid.Empty)
+            if (companyId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
@@ -44,7 +45,7 @@ namespace Start_App.Service
 
         public async Task<bool> CompanyExistsAsync(Guid companyId)
         {
-            if(companyId == Guid.Empty)
+            if (companyId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
@@ -62,9 +63,28 @@ namespace Start_App.Service
             _context.Employees.Remove(employee);
         }
 
-        public async Task<IEnumerable<Company>> GetCompaniesAsync()
+        public async Task<IEnumerable<Company>> GetCompaniesAsync(CompanyRequest request)
         {
-            return await _context.Companies.ToListAsync();
+            CheckHelper.ArgumentNullCheck(request);
+            if (string.IsNullOrWhiteSpace(request.CompanyName) &&
+                string.IsNullOrWhiteSpace(request.SearchTerm))
+            {
+                return await _context.Companies.ToListAsync();
+            }
+            var queryExpression = _context.Companies as IQueryable<Company>;
+            if (!string.IsNullOrWhiteSpace(request.CompanyName))
+            {
+                request.CompanyName = request.CompanyName.Trim();
+                queryExpression = queryExpression.Where(x => x.Name == request.CompanyName);
+            }
+            if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+            {
+                request.SearchTerm = request.SearchTerm.Trim();
+                queryExpression = queryExpression.Where(x => x.Name.Contains(request.SearchTerm) ||
+                    x.Introduction.Contains(request.SearchTerm));
+            }
+
+            return await queryExpression.ToListAsync();
         }
 
         public async Task<Company> GetCompanyAsync(Guid companyId)
@@ -105,17 +125,17 @@ namespace Start_App.Service
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
-            if(string.IsNullOrWhiteSpace(employeeName))
+            if (string.IsNullOrWhiteSpace(employeeName))
             {
                 throw new ArgumentNullException(nameof(employeeName));
             }
             return await _context.Employees
-                .Where(x => x.CompanyId == companyId && x.Name.Contains(employeeName)).ToListAsync();
+                .Where(x => x.CompanyId == companyId && x.FirstName.Contains(employeeName)).ToListAsync();
         }
 
         public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId)
         {
-            if(companyId == Guid.Empty)
+            if (companyId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }

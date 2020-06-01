@@ -7,7 +7,6 @@ namespace Start_App.Domain.Entities
     public class Employee
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
         [Required]
         [MaxLength(10)]
         public string EmployeeNo { get; set; }

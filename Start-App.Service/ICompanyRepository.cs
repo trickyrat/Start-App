@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Start_App.Domain.Entities;
+using Start_App.Domain.RquestParameter;
 
 namespace Start_App.Service
 {
@@ -16,7 +17,7 @@ namespace Start_App.Service
         void AddEmployee(Guid companyId, Employee employee);
         void UpdateEmployee(Employee employee);
         void DeleteEmployee(Employee employee);
-        Task<IEnumerable<Company>> GetCompaniesAsync();
+        Task<IEnumerable<Company>> GetCompaniesAsync(CompanyRequest request);
         Task<Company> GetCompanyAsync(Guid companyId);
         Task<IEnumerable<Company>> GetCompaniesByNameAsync(string companyName);
 

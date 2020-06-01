@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Start_App.Data;
 using Start_App.Domain.Dtos;
 using Start_App.Domain.Entities;
+using Start_App.Domain.RquestParameter;
 using Start_App.Service;
 
 namespace Start_App.Controllers
@@ -27,9 +28,9 @@ namespace Start_App.Controllers
 
         [Route("api/companies")]
         [HttpGet]
-        public async Task<IActionResult> GetCompanies()
+        public async Task<IActionResult> GetCompanies([FromQuery]CompanyRequest request)
         {
-            var list = await _repository.GetCompaniesAsync();
+            var list = await _repository.GetCompaniesAsync(request);
             var dtos = _mapper.Map<IEnumerable<CompanyDto>>(list);
             return Ok(dtos);
         }
@@ -49,7 +50,7 @@ namespace Start_App.Controllers
 
         //[Route("api/companies")]
         //[HttpPost]
-        //public async Task<IActionResult> AddCompany([FromBody])
+        //public async Task<IActionResult> AddCompany([FromBody] )
         //{
 
         //}

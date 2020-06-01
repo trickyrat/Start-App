@@ -41,7 +41,6 @@ namespace Start_App.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
                     EmployeeNo = table.Column<string>(maxLength: 10, nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),

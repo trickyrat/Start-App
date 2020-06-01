@@ -15,6 +15,7 @@ import { HeroformComponent } from './heroform/heroform.component';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
 import { RequestCache, RequestCacheWithMap } from './request-cache.service';
+import { CompanyListComponent } from './company-list/company-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RequestCache, RequestCacheWithMap } from './request-cache.service';
     HomeComponent,
     NavMenuComponent,
     InformationComponent,
-    HeroformComponent
+    HeroformComponent,
+    CompanyListComponent
   ],
   imports: [
     BrowserModule,
