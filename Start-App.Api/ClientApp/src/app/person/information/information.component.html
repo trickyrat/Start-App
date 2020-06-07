@@ -42,7 +42,7 @@
 
 <button class="btn btn-primary" (click)="updateInformation()">Update Information</button> -->
 
-<h1>FormBuilder</h1>
+<!-- <h1>FormBuilder</h1>
 <form [formGroup]="informations" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label class="col-md-3">Id:</label>
@@ -70,5 +70,21 @@
     </div>
 
     <button type="submit" class="btn btn-primary" [disabled]="!informations.valid">Submit</button>
-</form>
+</form> -->
+
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input type="text"
+             placeholder="Pick one"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
 

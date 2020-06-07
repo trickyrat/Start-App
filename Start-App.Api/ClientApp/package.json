@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "echo starting && ng serve",
+    "start": "echo starting... && ng serve",
     "build:ssr": "ng run Start-App:server:dev",
     "build": "ng build",
     "test": "ng test",

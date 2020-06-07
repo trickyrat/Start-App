@@ -23,12 +23,12 @@ export class CompanyService {
       .pipe(catchError(this.handleError('getCompanies', [])));
   }
 
-  getCompany(companyId: string): Observable<Company> {
-    return this.http.get<Company>(this.baseUrl + 'api/companies/' + companyId)
-      .pipe(catchError(this.handleError('getCompany', company)));
-  }
+  // getCompany(companyId: string): Observable<Company> {
+  //   return this.http.get<Company>(this.baseUrl + 'api/companies/' + companyId)
+  //     .pipe(catchError(this.handleError('getCompany', company)));
+  // }
 
-  addCompany(): Observable<Company> {
-    return this.http.post<Company>(this.baseUrl + 'api/companies/')
-  }
+  // addCompany(): Observable<Company> {
+  //   return this.http.post<Company>(this.baseUrl + 'api/companies/')
+  // }
 }

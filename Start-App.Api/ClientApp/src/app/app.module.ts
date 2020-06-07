@@ -16,6 +16,18 @@ import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
 import { RequestCache, RequestCacheWithMap } from './request-cache.service';
 import { CompanyListComponent } from './company-list/company-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from "@angular/material/divider";
+import { MatIconModule } from "@angular/material/icon";
+import { ControlsComponent } from './controls/controls.component';
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatFormFieldModule  } from "@angular/material/form-field";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatInputModule } from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -26,14 +38,26 @@ import { CompanyListComponent } from './company-list/company-list.component';
     NavMenuComponent,
     InformationComponent,
     HeroformComponent,
-    CompanyListComponent
+    CompanyListComponent,
+    ControlsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatInputModule
   ],
   providers: [
     PersonService,
