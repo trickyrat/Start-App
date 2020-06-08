@@ -5,6 +5,7 @@ import { PersonComponent } from './person/person.component';
 import { InformationComponent } from './person/information/information.component';
 import { HeroformComponent } from './heroform/heroform.component';
 import { ControlsComponent } from './controls/controls.component';
+import { CompanyListComponent } from './company-list/company-list.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,8 @@ const routes: Routes = [
   { path: 'form', component: InformationComponent },
   { path: 'form2', component: HeroformComponent },
   { path: 'controls', component: ControlsComponent },
+  { path: 'companies', component: CompanyListComponent },
+
 ];
 
 @NgModule({

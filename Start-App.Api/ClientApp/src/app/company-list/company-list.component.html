@@ -1,1 +1,19 @@
-<p>company-list works!</p>
+<div *ngIf="!companies">
+    <em>Loading...</em>
+</div>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+            <td mat-cell *matCellDef="let company">{{company.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CompanyName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Name</th>
+            <td mat-cell *matCellDef="let company">{{company.companyName}}</td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+</div>

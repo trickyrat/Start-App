@@ -2,7 +2,7 @@ import { Employee } from './employee';
 
 export class Company {
     id: string;
-    name: string;
+    companyName: string;
     introduction: string;
     country: string;
     industry: string;
