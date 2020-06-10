@@ -13,18 +13,31 @@ namespace Start_App.Domain.Entities
         {
             Employees = new List<Employee>();
         }
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(100)]
-        public string Name { get; set; }
+        public string CompanyName { get; set; }
 
-        [MaxLength(500)]
-        public string Introduction { get; set; }
-        public string Country { get; set; }
-        public string Industry { get; set; }
-        public string Product { get; set; }
+        [Display(Name = "省份")]
+        public string Province { get; set; }
 
+        [Display(Name = "城市")]
+        public string City { get; set; }
+
+        [Display(Name = "")]
+        public string County { get; set; }
+
+        /// <summary>
+        /// 旗下员工
+        /// </summary>
         public ICollection<Employee> Employees { get; set; }
+
+        /// <summary>
+        /// 旗下产品
+        /// </summary>
+        public ICollection<Product> Products { get; set; }
+
+
     }
 }

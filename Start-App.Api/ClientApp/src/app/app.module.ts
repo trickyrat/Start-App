@@ -31,6 +31,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
+import { CompanyFormComponent } from './company-list/company-form/company-form.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MatSortModule } from "@angular/material/sort";
     InformationComponent,
     HeroformComponent,
     CompanyListComponent,
-    ControlsComponent
+    ControlsComponent,
+    CompanyFormComponent
   ],
   imports: [
     BrowserModule,
