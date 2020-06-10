@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Trickyrat All Rights Reserved.
+// Licensed under the MIT LICENSE.
+
+using System;
 using System.ComponentModel.DataAnnotations;
 using Start_App.Domain.Enums;
 
@@ -12,10 +15,7 @@ namespace Start_App.Domain.Entities
         public string EmployeeNo { get; set; }
         [Required]
         [MaxLength(50)]
-        public string FirstName { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string LastName { get; set; }
+        public string EmployeeName { get; set; }
         public Gender Gender { get; set; }
         public DateTimeOffset DateOfBirth { get; set; }
 

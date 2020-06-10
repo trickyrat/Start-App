@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Trickyrat All Rights Reserved.
+// Licensed under the MIT LICENSE.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Start_App.Domain.Enums;

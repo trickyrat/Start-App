@@ -2,9 +2,7 @@
 // Licensed under the MIT LICENSE.
 
 using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Start_App.Domain.Entities;
 using Start_App.Domain.Enums;
 using Start_App.Domains.Entities;
@@ -17,8 +15,10 @@ namespace Start_App.Data
         {
 
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,8 +27,7 @@ namespace Start_App.Data
             modelBuilder.Entity<Company>().Property(x => x.Introduction).HasMaxLength(500);
 
             modelBuilder.Entity<Employee>().Property(x => x.EmployeeNo).IsRequired().HasMaxLength(10);
-            modelBuilder.Entity<Employee>().Property(x => x.FirstName).IsRequired().HasMaxLength(50);
-            modelBuilder.Entity<Employee>().Property(x => x.LastName).IsRequired().HasMaxLength(50);
+            modelBuilder.Entity<Employee>().Property(x => x.EmployeeName).IsRequired().HasMaxLength(50);
 
             modelBuilder.Entity<Employee>()
                 .HasOne(x => x.Company)
@@ -207,8 +206,7 @@ namespace Start_App.Data
                     CompanyId = Guid.Parse("bbdee09c-089b-4d30-bece-44df5923716c"),
                     DateOfBirth = new DateTime(1976, 1, 2),
                     EmployeeNo = "MSFT231",
-                    FirstName = "Nick",
-                    LastName = "Carter",
+                    EmployeeName = "Nick Carter",
                     Gender = Gender.Male
                 },
                 new Employee
@@ -217,8 +215,7 @@ namespace Start_App.Data
                     CompanyId = Guid.Parse("bbdee09c-089b-4d30-bece-44df5923716c"),
                     DateOfBirth = new DateTime(1981, 12, 5),
                     EmployeeNo = "MSFT245",
-                    FirstName = "Vince",
-                    LastName = "Carter",
+                    EmployeeName = "Vince Carter",
                     Gender = Gender.Male
                 },
                 new Employee
@@ -227,8 +224,7 @@ namespace Start_App.Data
                     CompanyId = Guid.Parse("6fb600c1-9011-4fd7-9234-881379716440"),
                     DateOfBirth = new DateTime(1986, 11, 4),
                     EmployeeNo = "G003",
-                    FirstName = "Mary",
-                    LastName = "King",
+                    EmployeeName = "Mary King",
                     Gender = Gender.Female
                 },
                 new Employee
@@ -237,8 +233,7 @@ namespace Start_App.Data
                     CompanyId = Guid.Parse("6fb600c1-9011-4fd7-9234-881379716440"),
                     DateOfBirth = new DateTime(1977, 4, 6),
                     EmployeeNo = "G097",
-                    FirstName = "Kevin",
-                    LastName = "Richardson",
+                    EmployeeName = "Kevin Richardson",
                     Gender = Gender.Male
                 },
                 new Employee
@@ -247,8 +242,7 @@ namespace Start_App.Data
                     CompanyId = Guid.Parse("5efc910b-2f45-43df-afae-620d40542853"),
                     DateOfBirth = new DateTime(1967, 1, 24),
                     EmployeeNo = "A009",
-                    FirstName = "卡",
-                    LastName = "里",
+                    EmployeeName = "卡里",
                     Gender = Gender.Female
                 },
                 new Employee
@@ -257,8 +251,7 @@ namespace Start_App.Data
                     CompanyId = Guid.Parse("5efc910b-2f45-43df-afae-620d40542853"),
                     DateOfBirth = new DateTime(1957, 3, 8),
                     EmployeeNo = "A404",
-                    FirstName = "Not",
-                    LastName = "Man",
+                    EmployeeName = "Not Man",
                     Gender = Gender.Male
                 });
         }

@@ -12,11 +12,11 @@ import { MatSort } from '@angular/material/sort';
 })
 export class CompanyListComponent implements OnInit {
   companies: Company[];
-  displayedColumns: string[] = ['Id', 'CompanyName'];
-  dataSource = new MatTableDataSource<Company>(this.companies);
+  displayedColumns: string[] = ['Id', 'CompanyName', 'Introduction', 'Country', 'Product'];
+  dataSource: MatTableDataSource<Company> = new MatTableDataSource<Company>(this.companies);
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  // @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private service: CompanyService) {
     this.service.getCompanies().subscribe(result => {
@@ -24,9 +24,9 @@ export class CompanyListComponent implements OnInit {
     }, error => { console.log(error); });
   }
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
+    console.log(this.dataSource.data);
   }
-
 
 }

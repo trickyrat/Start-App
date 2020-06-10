@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Trickyrat All Rights Reserved.
+// Licensed under the MIT LICENSE.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,12 +51,17 @@ namespace Start_App.Controllers
             return Ok(companyDto);
         }
 
-        //[Route("api/companies")]
-        //[HttpPost]
-        //public async Task<IActionResult> AddCompany([FromBody] )
-        //{
+        [Route("api/companies/addcompany")]
+        [HttpPost]
+        public async Task<IActionResult> AddCompany([FromBody] CompanyDto companyDto)
+        {
+            var company = _mapper.Map<Company>(companyDto);
+            var res = _repository.AddCompany(company);
+            bool flag = await _repository.SaveAsync();
 
-        //}
+            return new ObjectResult(_mapper.Map<CompanyDto>(res)) { StatusCode = StatusCodes.Status201Created };
+        }
+
 
         //[Route("api/companies/{companyId}")]
         //[HttpPatch]

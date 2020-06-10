@@ -2,6 +2,7 @@
 // Licensed under the MIT LICENSE.
 
 using System;
+using System.Collections.Generic;
 
 namespace Start_App.Domain.Dtos
 {
@@ -9,5 +10,8 @@ namespace Start_App.Domain.Dtos
     {
         public Guid Id { get; set; }
         public string CompanyName { get; set; }
+        public string Introduction { get; set; }
+        public string Country { get; set; }
+        public string Product { get; set; }
     }
 }

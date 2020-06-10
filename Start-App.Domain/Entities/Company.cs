@@ -9,6 +9,10 @@ namespace Start_App.Domain.Entities
 {
     public class Company
     {
+        public Company()
+        {
+            Employees = new List<Employee>();
+        }
         public Guid Id { get; set; }
 
         [Required]

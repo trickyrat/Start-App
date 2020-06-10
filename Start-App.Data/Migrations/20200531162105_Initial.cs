@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Trickyrat All Rights Reserved.
+// Licensed under the MIT LICENSE.
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Start_App.Data.Migrations

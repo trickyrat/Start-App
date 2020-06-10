@@ -1,10 +1,11 @@
-﻿using System;
+﻿// Copyright (c) Trickyrat All Rights Reserved.
+// Licensed under the MIT LICENSE.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Start_App.Data;
 using Start_App.Domain.Entities;
 using Start_App.Domain.RquestParameter;
@@ -21,15 +22,19 @@ namespace Start_App.Service
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public void AddCompany(Company company)
+        public Company AddCompany(Company company)
         {
             CheckHelper.ArgumentNullCheck(company);
             company.Id = Guid.NewGuid();
-            foreach (var employee in company.Employees)
+            if (company.Employees.Any())
             {
-                employee.Id = Guid.NewGuid();
+                foreach (var employee in company.Employees)
+                {
+                    employee.Id = Guid.NewGuid();
+                }
             }
-            _context.Companies.Add(company);
+            var entity = _context.Companies.Add(company);
+            return entity.Entity;
         }
 
         public void AddEmployee(Guid companyId, Employee employee)
@@ -130,7 +135,7 @@ namespace Start_App.Service
                 throw new ArgumentNullException(nameof(employeeName));
             }
             return await _context.Employees
-                .Where(x => x.CompanyId == companyId && x.FirstName.Contains(employeeName)).ToListAsync();
+                .Where(x => x.CompanyId == companyId && x.EmployeeName.Contains(employeeName)).ToListAsync();
         }
 
         public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId)

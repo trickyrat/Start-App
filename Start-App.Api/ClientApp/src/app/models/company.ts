@@ -1,5 +1,3 @@
-import { Employee } from './employee';
-
 export class Company {
     id: string;
     companyName: string;
@@ -7,5 +5,4 @@ export class Company {
     country: string;
     industry: string;
     product: string;
-    employees: Array<Employee>;
 }

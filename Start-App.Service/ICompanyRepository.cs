@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Trickyrat All Rights Reserved.
+// Licensed under the MIT LICENSE.
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Start_App.Domain.Entities;
@@ -21,7 +24,7 @@ namespace Start_App.Service
         Task<Company> GetCompanyAsync(Guid companyId);
         Task<IEnumerable<Company>> GetCompaniesByNameAsync(string companyName);
 
-        void AddCompany(Company company);
+        Company AddCompany(Company company);
         void UpdateCompany(Company company);
         void DeleteCompany(Company company);
         Task<bool> CompanyExistsAsync(Guid companyId);

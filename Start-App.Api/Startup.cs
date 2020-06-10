@@ -34,7 +34,7 @@ namespace Start_App
         private static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
         {
             builder.AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name &&
-                                                   level == (LogLevel.Information | LogLevel.Error | LogLevel.Warning | LogLevel.Debug))
+                                                   level == LogLevel.Information)
             .AddConsole();
         });
 
