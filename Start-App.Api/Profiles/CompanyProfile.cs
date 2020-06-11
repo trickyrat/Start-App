@@ -14,10 +14,10 @@ namespace Start_App.Profiles
             CreateMap<Company, CompanyDto>()
                 .ForMember(
                 dest => dest.CompanyName,
-                opt => opt.MapFrom(src => src.Name));
+                opt => opt.MapFrom(src => src.CompanyName));
 
             CreateMap<CompanyDto, Company>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CompanyName));
+                .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.CompanyName));
 
         }
     }

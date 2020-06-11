@@ -1,24 +1,21 @@
-﻿// Copyright (c) Trickyrat All Rights Reserved.
-// Licensed under the MIT LICENSE.
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Start_App.Domain.Entities
 {
     /// <summary>
-    /// 省份类
+    /// 区域类
     /// </summary>
-    public class Province
+    public class Area
     {
         public int Id { get; set; }
         /// <summary>
-        /// 省份代码
+        /// 区代码
         /// </summary>
-        public string ProvinceCode { get; set; }
+        public string AreaCode { get; set; }
         /// <summary>
-        /// 省份名称
+        /// 区域名称
         /// </summary>
-        public string ProvinceName { get; set; }
+        public string AreaName { get; set; }
         /// <summary>
         /// 简称
         /// </summary>
@@ -45,6 +42,10 @@ namespace Start_App.Domain.Entities
         /// </summary>
         public string Memo { get; set; }
 
-        public List<City> Cities { get; set; }
+
+        public string CityCode { get; set; }
+        public City City { get; set; }
+
+        public List<Street> Streets { get; set; }
     }
 }

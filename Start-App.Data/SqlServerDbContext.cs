@@ -28,26 +28,38 @@ namespace Start_App.Data
             modelBuilder.Entity<Employee>().Property(x => x.EmployeeNo).IsRequired().HasMaxLength(10);
             modelBuilder.Entity<Employee>().Property(x => x.EmployeeName).IsRequired().HasMaxLength(50);
 
-            modelBuilder.Entity<Employee>()
-                .HasOne(x => x.Company)
-                .WithMany(x => x.Employees)
-                .HasForeignKey(x => x.CompanyId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<Employee>()
+            //    .HasOne(x => x.Company)
+            //    .WithMany(x => x.Employees)
+            //    .HasForeignKey(x => x.CompanyId)
+            //    .OnDelete(DeleteBehavior.Restrict);  // company -> employees 1:n
 
-            modelBuilder.Entity<Company>().HasData(
-                new Company
-                {
+            //modelBuilder.Entity<City>()
+            //    .HasOne(x => x.Province)
+            //    .WithMany(x => x.Cities)
+            //    .HasForeignKey(x => x.ProvinceCode)
+            //    .OnDelete(DeleteBehavior.Restrict);  // province -> cities 1:n
 
-                });
-                
+            //modelBuilder.Entity<Area>()
+            //    .HasOne(x => x.City)
+            //    .WithMany(x => x.Areas)
+            //    .HasForeignKey(x => x.CityCode); // city -> areas 1:n
 
-            modelBuilder.Entity<Employee>().HasData();
+            //modelBuilder.Entity<Street>()
+            //    .HasOne(x => x.Area)
+            //    .WithMany(x => x.Streets)
+            //    .HasForeignKey(x => x.AreaCode);  // area -> streets 1:n
+
+
         }
 
         public DbSet<Person> People { get; set; }
-
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Area> Areas { get; set; }
+        public DbSet<Street> Streets { get; set; }
     }
 }

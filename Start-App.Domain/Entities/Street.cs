@@ -1,28 +1,24 @@
-﻿// Copyright (c) Trickyrat All Rights Reserved.
-// Licensed under the MIT LICENSE.
-
-using System.Collections.Generic;
-
-namespace Start_App.Domain.Entities
+﻿namespace Start_App.Domain.Entities
 {
     /// <summary>
-    /// 省份类
+    /// 街道类
     /// </summary>
-    public class Province
+    public class Street
     {
         public int Id { get; set; }
         /// <summary>
-        /// 省份代码
+        /// 街道名称
         /// </summary>
-        public string ProvinceCode { get; set; }
+        public string StreetName { get; set; }
         /// <summary>
-        /// 省份名称
+        /// 街道编号
         /// </summary>
-        public string ProvinceName { get; set; }
+        public string StreetCode { get; set; }
         /// <summary>
         /// 简称
         /// </summary>
         public string ShortName { get; set; }
+
         /// <summary>
         /// 经度
         /// </summary>
@@ -31,7 +27,7 @@ namespace Start_App.Domain.Entities
         /// 纬度
         /// </summary>
         public string Latitude { get; set; }
-        public int Sort { get; set; }
+
         /// <summary>
         /// 创建时间
         /// </summary>
@@ -45,6 +41,8 @@ namespace Start_App.Domain.Entities
         /// </summary>
         public string Memo { get; set; }
 
-        public List<City> Cities { get; set; }
+
+        public string AreaCode { get; set; }
+        public Area Area { get; set; }
     }
 }

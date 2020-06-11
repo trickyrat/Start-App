@@ -39,7 +39,8 @@ namespace Start_App
             services.AddDbContext<SqlServerDbContext>(options =>
             {
                 options.UseLoggerFactory(_loggerFactory)
-                       .UseSqlServer(Configuration.GetConnectionString("LocalDBString"));
+                       //.UseSqlServer(Configuration.GetConnectionString("LocalDBString"));
+                       .UseSqlServer(Configuration.GetConnectionString("SqlServerString"));
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

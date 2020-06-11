@@ -25,32 +25,24 @@ namespace Start_App.Service
         public Company AddCompany(Company company)
         {
             CheckHelper.ArgumentNullCheck(company);
-            company.Id = Guid.NewGuid();
-            if (company.Employees.Any())
-            {
-                foreach (var employee in company.Employees)
-                {
-                    employee.Id = Guid.NewGuid();
-                }
-            }
             var entity = _context.Companies.Add(company);
             return entity.Entity;
         }
 
-        public void AddEmployee(Guid companyId, Employee employee)
+        public void AddEmployee(int? companyId, Employee employee)
         {
-            if (companyId == Guid.Empty)
+            if (companyId == null)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
             CheckHelper.ArgumentNullCheck(employee);
-            employee.CompanyId = companyId;
+            employee.CompanyId = companyId.Value;
             _context.Employees.Add(employee);
         }
 
-        public async Task<bool> CompanyExistsAsync(Guid companyId)
+        public async Task<bool> CompanyExistsAsync(int? companyId)
         {
-            if (companyId == Guid.Empty)
+            if (companyId == null)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
@@ -80,21 +72,20 @@ namespace Start_App.Service
             if (!string.IsNullOrWhiteSpace(request.CompanyName))
             {
                 request.CompanyName = request.CompanyName.Trim();
-                queryExpression = queryExpression.Where(x => x.Name == request.CompanyName);
+                queryExpression = queryExpression.Where(x => x.CompanyName == request.CompanyName);
             }
             if (!string.IsNullOrWhiteSpace(request.SearchTerm))
             {
                 request.SearchTerm = request.SearchTerm.Trim();
-                queryExpression = queryExpression.Where(x => x.Name.Contains(request.SearchTerm) ||
-                    x.Introduction.Contains(request.SearchTerm));
+                queryExpression = queryExpression.Where(x => x.CompanyName.Contains(request.SearchTerm));
             }
 
             return await queryExpression.ToListAsync();
         }
 
-        public async Task<Company> GetCompanyAsync(Guid companyId)
+        public async Task<Company> GetCompanyAsync(int? companyId)
         {
-            if (companyId == Guid.Empty)
+            if (companyId == null)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
@@ -107,16 +98,16 @@ namespace Start_App.Service
             {
                 throw new ArgumentNullException(nameof(companyName));
             }
-            return await _context.Companies.Where(x => x.Name.Contains(companyName)).ToListAsync();
+            return await _context.Companies.Where(x => x.CompanyName.Contains(companyName)).ToListAsync();
         }
 
-        public async Task<Employee> GetEmployeeAsync(Guid companyId, Guid employeeId)
+        public async Task<Employee> GetEmployeeAsync(int? companyId, int? employeeId)
         {
-            if (employeeId == Guid.Empty)
+            if (employeeId == null)
             {
                 throw new ArgumentNullException(nameof(employeeId));
             }
-            if (companyId == Guid.Empty)
+            if (companyId == null)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
@@ -124,9 +115,9 @@ namespace Start_App.Service
                 .Where(x => x.CompanyId == companyId && x.Id == employeeId).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Employee>> GetEmployeesByNameAsync(Guid companyId, string employeeName)
+        public async Task<IEnumerable<Employee>> GetEmployeesByNameAsync(int? companyId, string employeeName)
         {
-            if (companyId == Guid.Empty)
+            if (companyId == null)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
@@ -138,9 +129,9 @@ namespace Start_App.Service
                 .Where(x => x.CompanyId == companyId && x.EmployeeName.Contains(employeeName)).ToListAsync();
         }
 
-        public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId)
+        public async Task<IEnumerable<Employee>> GetEmployeesAsync(int? companyId)
         {
-            if (companyId == Guid.Empty)
+            if (companyId == null)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }

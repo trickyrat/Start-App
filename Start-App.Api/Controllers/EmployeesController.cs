@@ -25,7 +25,7 @@ namespace Start_App.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEmployees(Guid companyId)
+        public async Task<IActionResult> GetEmployees(int? companyId)
         {
             if (!await _repository.CompanyExistsAsync(companyId))
             {
@@ -37,7 +37,7 @@ namespace Start_App.Controllers
         }
 
         [HttpGet("{employeeId}")]
-        public async Task<IActionResult> GetEmployee(Guid companyId, Guid employeeId)
+        public async Task<IActionResult> GetEmployee(int? companyId, int? employeeId)
         {
             if (!await _repository.CompanyExistsAsync(companyId))
             {

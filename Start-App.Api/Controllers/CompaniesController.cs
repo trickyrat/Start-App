@@ -40,7 +40,7 @@ namespace Start_App.Controllers
 
         [Route("api/companies/{companyId}")]
         [HttpGet]
-        public async Task<IActionResult> GetCompany(Guid companyId)
+        public async Task<IActionResult> GetCompany(int companyId)
         {
             if(!await _repository.CompanyExistsAsync(companyId))
             {
@@ -58,7 +58,6 @@ namespace Start_App.Controllers
             var company = _mapper.Map<Company>(companyDto);
             var res = _repository.AddCompany(company);
             bool flag = await _repository.SaveAsync();
-
             return new ObjectResult(_mapper.Map<CompanyDto>(res)) { StatusCode = StatusCodes.Status201Created };
         }
 
