@@ -1,20 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { PersonComponent } from './person/person.component';
-import { InformationComponent } from './person/information/information.component';
-import { HeroformComponent } from './heroform/heroform.component';
-import { ControlsComponent } from './controls/controls.component';
-import { CompanyListComponent } from './company-list/company-list.component';
+import { EmployeeListComponent } from './employee-list/employee-list.component';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'people', component: PersonComponent },
-  { path: 'form', component: InformationComponent },
-  { path: 'form2', component: HeroformComponent },
-  { path: 'controls', component: ControlsComponent },
-  { path: 'companies', component: CompanyListComponent },
+  { path: 'employees', component: EmployeeListComponent }
 
 ];
 

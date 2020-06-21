@@ -1,51 +1,46 @@
-﻿// Copyright (c) Trickyrat All Rights Reserved.
-// Licensed under the MIT LICENSE.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Start_App.Domain.Dtos;
+using Start_App.Domain.Entities;
+using Start_App.Domain.ResultModel;
+using Start_App.Domain.RquestParameter;
+using Start_App.Helper;
 using Start_App.Service;
 
 namespace Start_App.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("api/companies/{companyId}/employees")]
     public class EmployeesController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly ICompanyRepository _repository;
+        private readonly IEmployeeRepository _repository;
 
-        public EmployeesController(IMapper mapper, ICompanyRepository repository)
+        public EmployeesController(IMapper mapper, IEmployeeRepository repository)
         {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._mapper = mapper;
+            this._repository = repository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetEmployees(int? companyId)
+        public async Task<PagedList<EmployeeDto>> GetEmployees([FromQuery]EmployeeRequest request)
         {
-            if (!await _repository.CompanyExistsAsync(companyId))
-            {
-                return NotFound();
-            }
-            var employees = await _repository.GetEmployeesAsync(companyId);
-            var employeeDtos = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
-            return Ok(employeeDtos);
-        }
-
-        [HttpGet("{employeeId}")]
-        public async Task<IActionResult> GetEmployee(int? companyId, int? employeeId)
-        {
-            if (!await _repository.CompanyExistsAsync(companyId))
-            {
-                return NotFound();
-            }
-            var employee = await _repository.GetEmployeeAsync(companyId, employeeId);
-            var employeeDto = _mapper.Map<EmployeeDto>(employee);
-            return Ok(employeeDto);
+            PagedList<Employee> employees = await _repository.GetEmployees(request.PageIndex, request.PageSize);
+            var employeeDtos = _mapper.Map<PagedList<Employee>, PagedList<EmployeeDto>>(employees);
+            return employeeDtos;
+            //PagedListResultModel<EmployeeDto> result = new PagedListResultModel<EmployeeDto>
+            //{
+            //    Data = employeeDtos,
+            //    HasNext = employeeDtos.HasNext,
+            //    HasPrevious = employeeDtos.HasPrevious,
+            //    ResCode = 100,
+            //    ResMsg = "请求成功",    
+            //};
+            //return result;
         }
     }
 }

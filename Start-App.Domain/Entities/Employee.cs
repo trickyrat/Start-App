@@ -1,29 +1,39 @@
-﻿// Copyright (c) Trickyrat All Rights Reserved.
-// Licensed under the MIT LICENSE.
-
-using System;
-using System.ComponentModel.DataAnnotations;
-using Start_App.Domain.Enums;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Start_App.Domain.Entities
 {
-    public class Employee
+    public partial class Employee
     {
-        public int Id { get; set; }
+        public Employee()
+        {
+            EmployeeDepartmentHistory = new HashSet<EmployeeDepartmentHistory>();
+            EmployeePayHistory = new HashSet<EmployeePayHistory>();
+            JobCandidate = new HashSet<JobCandidate>();
+            PurchaseOrderHeader = new HashSet<PurchaseOrderHeader>();
+        }
 
-        [Required]
-        [MaxLength(10)]
-        public string EmployeeNo { get; set; }
+        public int BusinessEntityId { get; set; }
+        public string NationalIdnumber { get; set; }
+        public string LoginId { get; set; }
+        public short? OrganizationLevel { get; set; }
+        public string JobTitle { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string MaritalStatus { get; set; }
+        public string Gender { get; set; }
+        public DateTime HireDate { get; set; }
+        public bool? SalariedFlag { get; set; }
+        public short VacationHours { get; set; }
+        public short SickLeaveHours { get; set; }
+        public bool? CurrentFlag { get; set; }
+        public Guid Rowguid { get; set; }
+        public DateTime ModifiedDate { get; set; }
 
-        [Required]
-        [MaxLength(50)]
-        public string EmployeeName { get; set; }
-
-        public Gender Gender { get; set; }
-
-        public DateTimeOffset DateOfBirth { get; set; }
-
-        public int CompanyId { get; set; }
-        public Company Company { get; set; }
+        public virtual Person BusinessEntity { get; set; }
+        public virtual SalesPerson SalesPerson { get; set; }
+        public virtual ICollection<EmployeeDepartmentHistory> EmployeeDepartmentHistory { get; set; }
+        public virtual ICollection<EmployeePayHistory> EmployeePayHistory { get; set; }
+        public virtual ICollection<JobCandidate> JobCandidate { get; set; }
+        public virtual ICollection<PurchaseOrderHeader> PurchaseOrderHeader { get; set; }
     }
 }

@@ -2,19 +2,22 @@
 // Licensed under the MIT LICENSE.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Start_App.Domain.Enums;
 
 namespace Start_App.Domain.Dtos
 {
     public class EmployeeDto
     {
-        public Guid Id { get; set; }
-        public Guid CompanyId { get; set; }
-        public string EmployeeNo { get; set; }
-        public string EmployeeName { get; set; }
-        public string GenderDisplay { get; set; }
-        public int Age { get; set; }
+        public int BusinessEntityId { get; set; }
+        public string NationalIdnumber { get; set; }
+        public short? OrganizationLevel { get; set; }
+        public string JobTitle { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string MaritalStatus { get; set; }
+        public string Gender { get; set; }
+        public DateTime HireDate { get; set; }
+        public bool? SalariedFlag { get; set; }
+        public short VacationHours { get; set; }
+        public short SickLeaveHours { get; set; }
+        public bool? CurrentFlag { get; set; }
     }
 }

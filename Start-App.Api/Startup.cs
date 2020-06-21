@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Start_App.Data;
+using Start_App.Data.Models;
 using Start_App.Service;
 
 namespace Start_App
@@ -32,15 +33,14 @@ namespace Start_App
             .AddConsole();
         });
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ICompanyRepository, CompanyRepository>();
-            services.AddDbContext<SqlServerDbContext>(options =>
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            services.AddDbContext<AdventureWorks2017Context>(options =>
             {
                 options.UseLoggerFactory(_loggerFactory)
-                       //.UseSqlServer(Configuration.GetConnectionString("LocalDBString"));
-                       .UseSqlServer(Configuration.GetConnectionString("SqlServerString"));
+                .UseSqlServer(Configuration.GetConnectionString("SqlServerString"));
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
