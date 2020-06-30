@@ -1,33 +1,55 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Employee } from '../models/employee';
-import { HandleError, HttpErrorHandler } from './http-error-handler.service';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { BaseService } from './base-service.service';
+import { Employee } from "../models/employee";
+import { PagedList } from "../models/pagedList";
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService {
-  private handleError: HandleError;
-  employees: Employee[];
-  options = {
-    params: new HttpParams()
-      .set("pageIndex", '1')
-      .set("pageSize", '10'),
-  };
+export class EmployeeService
+  extends BaseService {
   constructor(
-    private http: HttpClient,
-    @Inject('BASE_URL') private baseUrl: string,
-    httpErrorHandler: HttpErrorHandler) {
-    this.handleError = httpErrorHandler.createHandleError('EmployeeService');
+    http: HttpClient,
+    @Inject('BASE_URL') baseUrl: string) {
+    super(http, baseUrl);
   }
 
-  getEmployees(pageIndex?: number, pageSize?: number): Observable<Employee[]> {
-    if (pageIndex != null && pageSize != null) {
-      this.options.params.set("pageIndex", pageIndex.toString()).set("pageSize", pageSize.toString());
+  getData<PagedList>(
+    pageIndex: number,
+    pageSize: number,
+    sortColumn: string,
+    sortOrder: string,
+    filterColumn: string,
+    filterQuery: string): Observable<PagedList> {
+    let url = this.baseUrl + 'api/employees';
+    let params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("sortColumn", sortColumn)
+      .set("sortOrder", sortOrder);
+    if (filterQuery) {
+      params = params
+        .set("filterColumn", filterColumn)
+        .set("sortOrder", sortOrder);
     }
-    return this.http.get<Employee[]>(this.baseUrl + 'api/employees', this.options)
-      .pipe(catchError(this.handleError('getEmployees', [])));
+    return this.http.get<PagedList>(url, { params });
+  }
+
+  get<Employee>(id: number): Observable<Employee> {
+    let url = this.baseUrl + "api/employees/" + id;
+    return this.http.get<Employee>(url);
+  }
+
+  put<Employee>(employee: Employee): Observable<Employee> {
+    let url = this.baseUrl + "api/employees/" + employee;
+    return this.http.put<Employee>(url, employee);
+  }
+
+  post<Employee>(employee: Employee): Observable<Employee> {
+    let url = this.baseUrl + "api/employees";
+    return this.http.post<Employee>(url, employee);
   }
 }

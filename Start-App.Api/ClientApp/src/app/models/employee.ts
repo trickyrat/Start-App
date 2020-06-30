@@ -1,5 +1,5 @@
-export class Employee {
-    businessEntityId: number;
+export interface Employee {
+    id: number;
     nationalIdnumber: string;
     organizationLevel: number;
     jobTitle: string;

@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Start_App.Data;
 using Start_App.Data.Models;
 using Start_App.Service;
 
@@ -28,8 +27,7 @@ namespace Start_App
 
         private static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
         {
-            builder.AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name &&
-                                                   level == LogLevel.Information)
+            builder.AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information)
             .AddConsole();
         });
 

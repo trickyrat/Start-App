@@ -8,9 +8,7 @@ export type HandleError = <T> (operation?: string, result?: T) => (error: HttpEr
 @Injectable()
 export class HttpErrorHandler {
 
-    constructor(private messageService: MessageService) {
-
-    }
+    constructor(private messageService: MessageService) {}
 
     createHandleError = (serviceName = '') => <T>(operation = 'operation', result = {} as T) => this.handleError(serviceName, operation, result);
 

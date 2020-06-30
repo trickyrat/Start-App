@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Start_App.Domain.Dtos;
@@ -27,20 +29,32 @@ namespace Start_App.Controllers
             this._repository = repository;
         }
 
+        [HttpGet]
         public async Task<PagedList<EmployeeDto>> GetEmployees([FromQuery]EmployeeRequest request)
         {
-            PagedList<Employee> employees = await _repository.GetEmployees(request.PageIndex, request.PageSize);
+            PagedList<Employee> employees = await _repository.GetEmployees(request);
             var employeeDtos = _mapper.Map<PagedList<Employee>, PagedList<EmployeeDto>>(employees);
             return employeeDtos;
-            //PagedListResultModel<EmployeeDto> result = new PagedListResultModel<EmployeeDto>
-            //{
-            //    Data = employeeDtos,
-            //    HasNext = employeeDtos.HasNext,
-            //    HasPrevious = employeeDtos.HasPrevious,
-            //    ResCode = 100,
-            //    ResMsg = "请求成功",    
-            //};
-            //return result;
         }
+
+        [HttpGet("{id}")]
+        public async Task<EmployeeDto> GetEmployeeById([FromQuery]int Id)
+        {
+            var employee = await _repository.GetEmployeeById(Id);
+            var employeeDto = _mapper.Map<EmployeeDto>(employee);
+            return employeeDto;
+        }
+
+        //[Authorize]
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> CreateEmployee(int id, Employee employee)
+        //{
+        //    if(id != employee.BusinessEntityId)
+        //    {
+        //        return BadRequest();
+        //    }
+
+
+        //}
     }
 }

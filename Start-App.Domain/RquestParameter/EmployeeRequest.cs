@@ -5,10 +5,11 @@ namespace Start_App.Domain.RquestParameter
 {
     public class EmployeeRequest
     {
-        public int PageIndex { get; set; } = 1;
-
-        public int PageSize { get; set; } = 10;
-        public string SearchTerm { get; set; }
-        public string EmployeeName { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public string SortColumn { get; set; }
+        public string SortOrder { get; set; }
+        public string FilterColumn { get; set; }
+        public string FilterQuery { get; set; }
     }
 }

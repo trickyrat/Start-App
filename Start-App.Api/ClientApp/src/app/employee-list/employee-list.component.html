@@ -1,61 +1,75 @@
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="BusinessEntityId"  >
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
-        <td mat-cell *matCellDef="let element"> {{element.businessEntityId}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="NationalIdnumber">
-        <th mat-header-cell *matHeaderCellDef> 国家ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.nationalIdnumber}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="OrganizationLevel">
-        <th mat-header-cell *matHeaderCellDef> 组织等级 </th>
-        <td style="text-align: center;" mat-cell *matCellDef="let element"> {{element.organizationLevel}} </td>
-      </ng-container>
-     
-      <ng-container matColumnDef="JobTitle">
-        <th mat-header-cell *matHeaderCellDef> 职位名称 </th>
-        <td mat-cell *matCellDef="let element"> {{element.jobTitle}} </td>
-      </ng-container>
-      <ng-container matColumnDef="BirthDate">
-        <th mat-header-cell *matHeaderCellDef> 生日 </th>
-        <td mat-cell *matCellDef="let element"> {{element.birthDate}} </td>
-      </ng-container>
-      <ng-container matColumnDef="MaritalStatus">
-        <th mat-header-cell *matHeaderCellDef> 婚姻状况 </th>
-        <td mat-cell *matCellDef="let element"> {{element.maritalStatus}} </td>
-      </ng-container>
-      <ng-container matColumnDef="Gender">
-        <th mat-header-cell *matHeaderCellDef> 性别 </th>
-        <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
-      </ng-container>
-      <ng-container matColumnDef="HireDate">
-        <th mat-header-cell *matHeaderCellDef> 雇佣日期 </th>
-        <td style="text-align: center;" mat-cell *matCellDef="let element"> {{element.hireDate}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="SalariedFlag">
-        <th mat-header-cell *matHeaderCellDef> 是否有薪 </th>
-        <td mat-cell *matCellDef="let element"> {{element.salariedFlag}} </td>
-      </ng-container>
-      <ng-container matColumnDef="VacationHours">
-        <th mat-header-cell *matHeaderCellDef> 休假时长 </th>
-        <td mat-cell *matCellDef="let element"> {{element.vacationHours}} </td>
-      </ng-container>
-      <ng-container matColumnDef="SickLeaveHours">
-        <th mat-header-cell *matHeaderCellDef> 病假时长 </th>
-        <td mat-cell *matCellDef="let element"> {{element.sickLeaveHours}} </td>
-      </ng-container>
-      <ng-container matColumnDef="CurrentFlag">
-        <th mat-header-cell *matHeaderCellDef> 当前状态 </th>
-        <td mat-cell *matCellDef="let element"> {{element.currentFlag}} </td>
-      </ng-container>
+<h1>员工列表</h1>
+<p>使用AdventureWorks2017数据库数据mock</p>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-  </div>
+<p *ngIf="!employees"><em>Loading...</em></p>
+
+<div class="commands text-right" *ngIf="employees">
+  <button type="button" [routerLink]="['/employess']" class="btn btn-success">添加一名新员工</button>
+</div>
+
+<mat-form-field [hidden]="!employees">
+  <input matInput (keyup)="loadData($event.target.value)" placeholder="通过名称过滤">
+</mat-form-field>
+
+
+<table mat-table [dataSource]="employees" matSort (matSortChange)="loadData()" matSortActive="{{defaultSortColumn}}"
+  matSortDirection="{{defaultSortOrder}}" class="mat-elevation-z8">
+  <ng-container matColumnDef="Id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="NationalIdnumber">
+    <th mat-header-cell *matHeaderCellDef> 国家ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.nationalIdnumber}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="OrganizationLevel">
+    <th mat-header-cell *matHeaderCellDef> 组织等级 </th>
+    <td style="text-align: center;" mat-cell *matCellDef="let element"> {{element.organizationLevel}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="JobTitle">
+    <th mat-header-cell *matHeaderCellDef> 职位名称 </th>
+    <td mat-cell *matCellDef="let element"> {{element.jobTitle}} </td>
+  </ng-container>
+  <ng-container matColumnDef="BirthDate">
+    <th mat-header-cell *matHeaderCellDef> 生日 </th>
+    <td mat-cell *matCellDef="let element"> {{element.birthDate}} </td>
+  </ng-container>
+  <ng-container matColumnDef="MaritalStatus">
+    <th mat-header-cell *matHeaderCellDef> 婚姻状况 </th>
+    <td mat-cell *matCellDef="let element"> {{element.maritalStatus}} </td>
+  </ng-container>
+  <ng-container matColumnDef="Gender">
+    <th mat-header-cell *matHeaderCellDef> 性别 </th>
+    <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+  </ng-container>
+  <ng-container matColumnDef="HireDate">
+    <th mat-header-cell *matHeaderCellDef> 雇佣日期 </th>
+    <td style="text-align: center;" mat-cell *matCellDef="let element"> {{element.hireDate}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="SalariedFlag">
+    <th mat-header-cell *matHeaderCellDef> 是否有薪 </th>
+    <td mat-cell *matCellDef="let element"> {{element.salariedFlag}} </td>
+  </ng-container>
+  <ng-container matColumnDef="VacationHours">
+    <th mat-header-cell *matHeaderCellDef> 休假时长 </th>
+    <td mat-cell *matCellDef="let element"> {{element.vacationHours}} </td>
+  </ng-container>
+  <ng-container matColumnDef="SickLeaveHours">
+    <th mat-header-cell *matHeaderCellDef> 病假时长 </th>
+    <td mat-cell *matCellDef="let element"> {{element.sickLeaveHours}} </td>
+  </ng-container>
+  <ng-container matColumnDef="CurrentFlag">
+    <th mat-header-cell *matHeaderCellDef> 当前状态 </th>
+    <td mat-cell *matCellDef="let element"> {{element.currentFlag}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [hidden]="!employees" (page)="getData($event)" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons></mat-paginator>

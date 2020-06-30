@@ -7,7 +7,7 @@ namespace Start_App.Domain.Dtos
 {
     public class EmployeeDto
     {
-        public int BusinessEntityId { get; set; }
+        public int Id { get; set; }
         public string NationalIdnumber { get; set; }
         public short? OrganizationLevel { get; set; }
         public string JobTitle { get; set; }

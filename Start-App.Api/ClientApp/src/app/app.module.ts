@@ -1,15 +1,12 @@
+// angular modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { MessageService } from './services/message.service';
-import { RequestCache, RequestCacheWithMap } from './services/request-cache.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// angular material modules
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from "@angular/material/divider";
@@ -23,9 +20,18 @@ import { MatInputModule } from "@angular/material/input";
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
+
+// components
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
+
+// services
 import { HttpErrorHandler } from './services/http-error-handler.service';
 import { EmployeeService } from './services/employee.service';
+import { RequestCache, RequestCacheWithMap } from './services/request-cache.service';
+import { MessageService } from './services/message.service';
 
 
 @NgModule({
