@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
 using Start_App.Data.Models;
 using Start_App.Domain.Entities;
 using Start_App.Domain.RquestParameter;

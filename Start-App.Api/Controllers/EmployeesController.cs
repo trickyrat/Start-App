@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Start_App.Domain.Dtos;
 using Start_App.Domain.Entities;
-using Start_App.Domain.ResultModel;
 using Start_App.Domain.RquestParameter;
 using Start_App.Helper;
 using Start_App.Service;
