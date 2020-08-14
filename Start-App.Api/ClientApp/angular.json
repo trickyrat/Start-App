@@ -152,6 +152,6 @@
   },
   "defaultProject": "Start-App",
   "cli": {
-    "packageManager": "cnpm"
+    "packageManager": "npm"
   }
 }
