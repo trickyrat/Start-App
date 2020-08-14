@@ -32,6 +32,7 @@ import { HttpErrorHandler } from './services/http-error-handler.service';
 import { EmployeeService } from './services/employee.service';
 import { RequestCache, RequestCacheWithMap } from './services/request-cache.service';
 import { MessageService } from './services/message.service';
+import { LoginComponent } from './oauth/login/login.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { MessageService } from './services/message.service';
     HomeComponent,
     NavMenuComponent,
     EmployeeListComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
