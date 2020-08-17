@@ -33,6 +33,11 @@ import { EmployeeService } from './services/employee.service';
 import { RequestCache, RequestCacheWithMap } from './services/request-cache.service';
 import { MessageService } from './services/message.service';
 import { LoginComponent } from './oauth/login/login.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductRowComponent } from './product-list/product-row/product-row.component';
+import { ProductImageComponent } from './product-list/product-image/product-image.component';
+import { ProductDepartmentComponent } from './product-list/product-department/product-department.component';
+import { PriceDisplayComponent } from './product-list/price-display/price-display.component';
 
 
 @NgModule({
@@ -42,6 +47,11 @@ import { LoginComponent } from './oauth/login/login.component';
     NavMenuComponent,
     EmployeeListComponent,
     LoginComponent,
+    ProductListComponent,
+    ProductRowComponent,
+    ProductImageComponent,
+    ProductDepartmentComponent,
+    PriceDisplayComponent,
   ],
   imports: [
     BrowserModule,

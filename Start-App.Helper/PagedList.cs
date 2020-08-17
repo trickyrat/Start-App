@@ -83,7 +83,7 @@ namespace Start_App.Helper
                 // 根据T的属性进行排序
                 source = source.OrderBy(string.Format("{0} {1}", sortColumn, sortOrder));
             }
-            source = source.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            source = source.Skip(pageIndex * pageSize).Take(pageSize);
             var data = await source.ToListAsync();
 
             return new PagedList<T>(pageSize, pageIndex, count, data, sortColumn, sortOrder, filterColumn, filterQuery);

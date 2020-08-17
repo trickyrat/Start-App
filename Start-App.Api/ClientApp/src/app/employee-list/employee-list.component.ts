@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Employee } from '../models/employee';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -16,13 +16,15 @@ export class EmployeeListComponent
   implements OnInit {
   public displayedColumns: string[] = ['Id', 'NationalIdnumber', 'OrganizationLevel', 'JobTitle', 'BirthDate', 'MaritalStatus', 'Gender', 'HireDate', 'SalariedFlag', 'VacationHours', 'SickLeaveHours', 'CurrentFlag']
   public employees: MatTableDataSource<Employee>;
-  defaultPageIndex: number = 1;
+  defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
   public defaultSortColumn: string = "businessEntityId";
   public defaultSortOrder: string = "asc";
   defaultFilterColumn: string = "businessEntityId";
   filterQuery: string = null;
 
+
+  @Input() employee: Employee;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -62,4 +64,9 @@ export class EmployeeListComponent
         this.employees = new MatTableDataSource<Employee>(result.data);
       }, error => console.log(error));
   }
+
+  addEmployee(employee:Employee) {
+
+  }
+
 }

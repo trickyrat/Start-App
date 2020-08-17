@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from '../models/product';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +7,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  products: Product[];
+  constructor() {
+    this.products = [
+      new Product(
+        'MYSHOES',
+        'Black Running Shoes',
+        '/assets/images/products/black-shoes.jpg',
+        ['Men', 'Shoes', 'Running Shoes'],
+        109.99),
+      new Product(
+        'NEATOJACKET',
+        'Blue Jacket',
+        '/assets/images/products/blue-jacket.jpg',
+        ['Women', 'Apparel', 'Jackets & Vests'],
+        238.99),
+      new Product(
+        'NICEHAT',
+        'A Nice Black Hat',
+        '/assets/images/products/black-hat.jpg',
+        ['Men', 'Accessories', 'Hats'],
+        29.99)
+    ];
+  }
 
   ngOnInit(): void {
   }
 
+  productWasSelected(product: Product): void {
+    console.log("Product clicked: ", product);
+  }
 }
