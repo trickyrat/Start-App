@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Start_App.Data.Models;
 using Start_App.Domain.Entities;
@@ -11,8 +12,11 @@ namespace Start_App.V2.Service
     {
         private readonly AdventureWorks2017Context _context;
         private readonly ILogger<EmployeeRepository> _logger;
+        private readonly IHttpClientFactory _clientFactory;
 
-        public EmployeeRepository(AdventureWorks2017Context context, ILogger<EmployeeRepository> logger)
+        public EmployeeRepository(AdventureWorks2017Context context,
+            ILogger<EmployeeRepository> logger,
+            IHttpClientFactory clientFactory)
         {
             _context = context;
             _logger = logger;

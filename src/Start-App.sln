@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start-App.Service", "Start-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start-App.Helper", "Start-App.Helper\Start-App.Helper.csproj", "{673633E6-38B3-4E70-8189-FD40E81633D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Start-App.Test", "Start-App.Test\Start-App.Test.csproj", "{8E5F8BE6-E77E-4DE6-B7B7-A35DA605E213}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Start-App.Test", "..\test\Start-App.Test\Start-App.Test.csproj", "{8E5F8BE6-E77E-4DE6-B7B7-A35DA605E213}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

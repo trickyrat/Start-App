@@ -33,6 +33,9 @@ namespace Start_App
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddHttpClient();
+
             services.AddScoped<V1.Service.IEmployeeRepository, V1.Service.EmployeeRepository>();
             services.AddScoped<V2.Service.IEmployeeRepository, V2.Service.EmployeeRepository>();
 
