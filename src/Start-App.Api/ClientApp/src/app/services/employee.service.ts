@@ -24,7 +24,7 @@ export class EmployeeService
     sortOrder: string,
     filterColumn: string,
     filterQuery: string): Observable<PagedList> {
-    let url = this.baseUrl + 'api/employees';
+    let url = this.baseUrl + 'api/v1/employees';
     let params = new HttpParams()
       .set("pageIndex", pageIndex.toString())
       .set("pageSize", pageSize.toString())
@@ -39,17 +39,17 @@ export class EmployeeService
   }
 
   get<Employee>(id: number): Observable<Employee> {
-    let url = this.baseUrl + "api/employees/" + id;
+    let url = this.baseUrl + "api/v1/employees/" + id;
     return this.http.get<Employee>(url);
   }
 
   put<Employee>(employee: Employee): Observable<Employee> {
-    let url = this.baseUrl + "api/employees/" + employee;
+    let url = this.baseUrl + "api/v1/employees/" + employee;
     return this.http.put<Employee>(url, employee);
   }
 
   post<Employee>(employee: Employee): Observable<Employee> {
-    let url = this.baseUrl + "api/employees";
+    let url = this.baseUrl + "api/v1/employees";
     return this.http.post<Employee>(url, employee);
   }
 }
