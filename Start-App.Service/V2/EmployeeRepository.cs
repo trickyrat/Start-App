@@ -1,32 +1,33 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Start_App.Data.Models;
 using Start_App.Domain.Entities;
 using Start_App.Domain.RquestParameter;
 using Start_App.Helper;
 
-namespace Start_App.Service
+namespace Start_App.V2.Service
 {
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly AdventureWorks2017Context _context;
+        private readonly ILogger<EmployeeRepository> _logger;
 
-        public EmployeeRepository(AdventureWorks2017Context context)
+        public EmployeeRepository(AdventureWorks2017Context context, ILogger<EmployeeRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
-        public async Task<Employee> GetEmployeeById(int Id)
+        public Employee GetEmployeeById(int Id)
         {
-            var employee = await _context.Employee.FindAsync(Id);// 使用FindAsync
-            //var employee = _context.Employee.FirstOrDefaultAsync(x => x.BusinessEntityId == Id); // 使用FirstOrDefaultAsync
-            //var employee = _context.Employee.FirstAsync(x => x.BusinessEntityId == Id); // 使用FirstAsync 但是查不到 则会抛异常 推荐使用上面两种
+            var employee = _context.Employee.Find(Id);
             return employee;
         }
 
-        public async Task<PagedList<Employee>> GetEmployees(EmployeeRequest request)
+        public PagedList<Employee> GetEmployees(EmployeeRequest request)
         {
             var employeesQuery = _context.Employee.AsQueryable();
-            var employees = await PagedList<Employee>.CreateAsync(employeesQuery,
+            var employees = PagedList<Employee>.Create(employeesQuery,
                 request.PageIndex,
                 request.PageSize,
                 request.SortColumn,
@@ -35,5 +36,6 @@ namespace Start_App.Service
                 request.FilterQuery);
             return employees;
         }
+
     }
 }

@@ -89,6 +89,42 @@ namespace Start_App.Helper
             return new PagedList<T>(pageSize, pageIndex, count, data, sortColumn, sortOrder, filterColumn, filterQuery);
         }
 
+
+        public static PagedList<T> Create(IQueryable<T> source,
+            int pageIndex,
+            int pageSize,
+            string sortColumn = null,
+            string sortOrder = null,
+            string filterColumn = null,
+            string filterQuery = null)
+        {
+            if (!string.IsNullOrEmpty(filterColumn)
+                && !string.IsNullOrEmpty(filterQuery)
+                && IsValidProperty(filterColumn))
+            {
+                // 根据T的属性进行过滤
+                source = source.Where(string.Format("{0}.Contains(@0)", filterColumn), filterQuery);
+
+            }
+            var count = source.Count();
+            if (!string.IsNullOrEmpty(sortColumn)
+                && IsValidProperty(sortColumn))
+            {
+                sortOrder = !string.IsNullOrEmpty(sortOrder)
+                    && sortOrder.ToUpper() == "ASC"
+                    ? "ASC"
+                    : "DESC";
+                // 根据T的属性进行排序
+                source = source.OrderBy(string.Format("{0} {1}", sortColumn, sortOrder));
+            }
+            source = source.Skip(pageIndex * pageSize).Take(pageSize);
+            var data = source.ToList();
+
+            return new PagedList<T>(pageSize, pageIndex, count, data, sortColumn, sortOrder, filterColumn, filterQuery);
+        }
+
+
+
         public static bool IsValidProperty(string propertyName, bool throwExceptionIfNotFound = true)
         {
             var prop = typeof(T).GetProperty(

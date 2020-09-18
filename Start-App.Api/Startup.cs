@@ -5,6 +5,7 @@ using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Start_App.Data.Models;
-using Start_App.Service;
 
 namespace Start_App
 {
@@ -33,7 +33,38 @@ namespace Start_App
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<V1.Service.IEmployeeRepository, V1.Service.EmployeeRepository>();
+            services.AddScoped<V2.Service.IEmployeeRepository, V2.Service.EmployeeRepository>();
+
+            
+            services.AddSwaggerDocument(document =>
+            {
+                document.DocumentName = "v1";
+                document.ApiGroupNames = new string[] { "v1" };
+                document.Title = "线上版本";
+                document.UseControllerSummaryAsTagDescription = true;
+            });
+            services.AddSwaggerDocument(document =>
+            {
+                document.DocumentName = "v2";
+                document.ApiGroupNames = new string[] { "v2" };
+                document.Title = "测试版本";
+                document.UseControllerSummaryAsTagDescription = true;
+            });
+            // api version control
+            services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ApiVersionReader = new UrlSegmentApiVersionReader();
+                options.ReportApiVersions = true;
+            })
+            .AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV"; //"'v'major[.minor][-status]"
+                options.SubstituteApiVersionInUrl = true;
+            });
+
+
 
             services.AddDbContext<AdventureWorks2017Context>(options =>
             {
@@ -42,7 +73,7 @@ namespace Start_App
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddSwaggerDocument();
+
 
             services.AddControllers();
             services.AddSpaStaticFiles(configuration =>
@@ -69,6 +100,8 @@ namespace Start_App
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
+
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
