@@ -1,13 +1,31 @@
 # Start-App
 
-#### 介绍
-使用ASP.NET CORE 3.1 WEBAPI + Angular 9 + Swagger + RESTful API构建现代Web
+Welcome to Start-App!
 
-#### 软件架构
-ASP.NET CORE 3.1 WEBAPI + Angular 9 + Swagger + OAuth2.0 + EntityFramework Core 3.1 + Sql Server
+## Instroduction
+Build modern web with ASP.NET CORE WEBAPI 3.1 + Angular 9 + OAuth2.0 + SwaggerUI + RESTful API
 
-#### 使用说明
+## Dependencies
 
-> 1.  clone repository
-> 2.  run `dotnet run`
+||Dependency Name|
+|:----:|:----:|
+|Web Framework|ASP.NET CORE WEBAPI 3.1|
+|Front-End|Angular 10 + Angular Material|
+|UnitTest| xUnit|
+|Authentication/Authorization|IdentityServer4|
+|ORM|EntityFramework Core 3.1|
+|Database|Sql Server 2019|
+|Document|SwaggerUI|
+
+
+## Prequirements
+
+> .Net Core SDK 3.1 or higher  
+
+## Usage
+
+> 1. clone repository
+> 2. cd src/Start-App/Start-App.Api
+> 3. run `dotnet restore` and add your own database connection string in appsettings.json  
+> 4. run `dotnet run` and open `localhost:5000` in browser.
 
