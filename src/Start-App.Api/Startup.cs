@@ -38,7 +38,6 @@ namespace Start_App
 
             services.AddScoped<V1.Service.IEmployeeRepository, V1.Service.EmployeeRepository>();
             services.AddScoped<V2.Service.IEmployeeRepository, V2.Service.EmployeeRepository>();
-
             
             services.AddSwaggerDocument(document =>
             {
@@ -68,7 +67,7 @@ namespace Start_App
             });
 
 
-
+            // database context
             services.AddDbContext<AdventureWorks2017Context>(options =>
             {
                 options.UseLoggerFactory(_loggerFactory)

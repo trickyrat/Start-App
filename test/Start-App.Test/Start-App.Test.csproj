@@ -15,7 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Start-App.Api\Start-App.Api.csproj" />
+    <ProjectReference Include="..\..\src\Start-App.Api\Start-App.Api.csproj" />
   </ItemGroup>
+
 
 </Project>
