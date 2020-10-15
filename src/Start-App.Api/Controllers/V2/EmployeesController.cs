@@ -6,13 +6,13 @@ using Start_App.Domain.Dtos;
 using Start_App.Domain.Entities;
 using Start_App.Domain.RquestParameter;
 using Start_App.Helper;
-using Start_App.V2.Service;
+using Start_App.Service.V2;
 
 namespace Start_App.V2.Controllers
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("2")]
-    [OpenApiTag("Employees", Description = "New Api")]
+    [OpenApiTag("Employees", Description = "Development enviroment")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "v2")]
     public class EmployeesController : ControllerBase

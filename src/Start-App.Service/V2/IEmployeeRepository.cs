@@ -3,7 +3,7 @@ using Start_App.Domain.Entities;
 using Start_App.Domain.RquestParameter;
 using Start_App.Helper;
 
-namespace Start_App.V2.Service
+namespace Start_App.Service.V2
 {
     public interface IEmployeeRepository
     {

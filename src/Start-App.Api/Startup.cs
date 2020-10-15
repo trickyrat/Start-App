@@ -36,8 +36,9 @@ namespace Start_App
 
             services.AddHttpClient();
 
-            services.AddScoped<V1.Service.IEmployeeRepository, V1.Service.EmployeeRepository>();
-            services.AddScoped<V2.Service.IEmployeeRepository, V2.Service.EmployeeRepository>();
+            services.AddScoped<Service.V1.IEmployeeRepository, Service.V1.EmployeeRepository>();
+            services.AddScoped<Service.V2.IEmployeeRepository, Service.V2.EmployeeRepository>();
+            services.AddScoped<Service.V1.IProductRepository, Service.V1.ProductRepository>();
             
             services.AddSwaggerDocument(document =>
             {

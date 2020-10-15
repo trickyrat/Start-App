@@ -1,5 +1,34 @@
-<div>
-    <app-product-list [productList]="products" (onProductSelected)="productWasSelected($event)">
+<form>
+    <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="selectedCategoryId" name="category" (selectionChange)="onCategoryChanged($event)">
+            <mat-option>
+                None
+            </mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+                {{category.categoryName}}
+            </mat-option>
+        </mat-select>
 
-    </app-product-list>
-</div>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Subcategory</mat-label>
+        <mat-select [(ngModel)]="selectedSubcategoryId" name="subcategory">
+            <mat-option>
+                None
+            </mat-option>
+            <mat-option *ngFor="let category of subcategories" [value]="category.subcategoryId">
+                {{category.categoryName}}
+            </mat-option>
+        </mat-select>
+
+    </mat-form-field>
+</form>
+
+<p>Category: {{selectedCategoryId}}</p>
+<p>Subcategory: {{selectedSubcategoryId}}</p>
+
+<!-- <div>
+    <app-product-list [productList]="products" (onProductSelected)="productWasSelected($event)"></app-product-list>
+</div> -->
