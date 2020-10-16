@@ -15,7 +15,7 @@ namespace Start_App.AutoMapperProfiles.Products
 
 
             CreateMap<ProductSubcategory, ProductSubcategoryDto>()
-                .ForMember(dest => dest.SubCategoryId, opt => opt.MapFrom(src => src.ProductSubcategoryId))
+                .ForMember(dest => dest.SubcategoryId, opt => opt.MapFrom(src => src.ProductSubcategoryId))
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Name));
 
         }

@@ -16,6 +16,6 @@ namespace Start_App.Service.V1
         List<ProductSubcategory> GetProductSubcategory(int productCategoryId);
 
 
-        PagedList<Product> GetProducts(RequestBase request);
+        PagedList<Product> GetProducts(ProductRequest request);
     }
 }

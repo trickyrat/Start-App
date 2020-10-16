@@ -18,13 +18,9 @@ namespace Start_App.Profiles
 
             CreateMap<PagedList<Employee>, PagedList<EmployeeDto>>()
                 .ForCtorParam("data", opt => opt.MapFrom(src => src.Data))
-                .ForCtorParam("count", opt => opt.MapFrom(src => src.TotalCount))
+                .ForCtorParam("total", opt => opt.MapFrom(src => src.TotalCount))
                 .ForCtorParam("pageIndex", opt => opt.MapFrom(src => src.PageIndex))
-                .ForCtorParam("pageSize", opt => opt.MapFrom(src => src.PageSize))
-                .ForCtorParam("sortColumn", opt => opt.MapFrom(src => src.SortColumn))
-                .ForCtorParam("sortOrder", opt => opt.MapFrom(src => src.SortOrder))
-                .ForCtorParam("filterColumn", opt => opt.MapFrom(src => src.FilterColumn))
-                .ForCtorParam("filterQuery", opt => opt.MapFrom(src => src.FilterQuery));
+                .ForCtorParam("pageSize", opt => opt.MapFrom(src => src.PageSize));
         }
     }
 }

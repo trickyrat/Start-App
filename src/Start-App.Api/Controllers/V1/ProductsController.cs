@@ -29,7 +29,7 @@ namespace Start_App.Controllers.V1
 
         [HttpGet]
         [MapToApiVersion("1")]
-        public IActionResult Products([FromQuery]RequestBase request)
+        public IActionResult Products([FromQuery]ProductRequest request)
         {
             var data = _repository.GetProducts(request);
             var res = _mapper.Map<PagedList<Product>, PagedList<ProductDto>>(data);

@@ -12,7 +12,7 @@ namespace Start_App.V2.Controllers
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("2")]
-    [OpenApiTag("Employees", Description = "Development enviroment")]
+    [OpenApiTag("Employees", Description = "Development environment")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "v2")]
     public class EmployeesController : ControllerBase

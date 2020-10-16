@@ -13,7 +13,7 @@ namespace Start_App.Domain.Dtos
 
     public class ProductSubcategoryDto
     {
-        public int SubCategoryId { get; set; }
+        public int SubcategoryId { get; set; }
 
         public string CategoryName { get; set; }
     }

@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { Product } from '../models/product';
 import { ProductCategory, ProductSubcategory } from '../models/product';
+import { RequestBase } from '../models/request';
 import { ProductService } from "../services/product.service";
 
 
@@ -12,6 +13,9 @@ import { ProductService } from "../services/product.service";
 })
 export class ProductComponent implements OnInit {
   products: Product[];
+
+  pageIndex: number = 1;
+  pageSize: number = 10;
 
   // 已选中分类
   selectedCategoryId: number;
@@ -52,9 +56,9 @@ export class ProductComponent implements OnInit {
       err => console.log(err));
   }
 
-  productWasSelected(product: Product): void {
-    console.log("Product clicked: ", product);
-  }
+  // productWasSelected(product: Product): void {
+  //   console.log("Product clicked: ", product);
+  // }
 
   onCategoryChanged(source: MatSelectChange): void {
     this.productService.getProductSubcategory(source.value).subscribe(
@@ -63,4 +67,13 @@ export class ProductComponent implements OnInit {
     );
   }
 
+  onSubcategoryChanged(source: MatSelectChange): void { 
+    console.log(source.value);
+    console.log(this.selectedSubcategoryId);
+  }
+
+  getProducts(): void {
+    let request: RequestBase = new RequestBase(this.pageIndex, this.pageSize, "", "ASC", "", "");
+    this.productService.getProducts(request).subscribe(res => {this.products = res},err => console.log(err));
+  }
 }

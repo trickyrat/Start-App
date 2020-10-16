@@ -39,7 +39,7 @@ namespace Start_App
             services.AddScoped<Service.V1.IEmployeeRepository, Service.V1.EmployeeRepository>();
             services.AddScoped<Service.V2.IEmployeeRepository, Service.V2.EmployeeRepository>();
             services.AddScoped<Service.V1.IProductRepository, Service.V1.ProductRepository>();
-            
+
             services.AddSwaggerDocument(document =>
             {
                 document.DocumentName = "v1";
@@ -92,11 +92,11 @@ namespace Start_App
             {
                 app.UseDeveloperExceptionPage();
             }
-            // else
-            // {
-            //     app.UseExceptionHandler("/Error");
-            //     app.UseHsts();
-            // }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                //app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -111,11 +111,12 @@ namespace Start_App
             }
             app.UseRouting();
             app.UseEndpoints(endpoints =>
-           {
+            {
                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id}");
-           });
+            });
+
             //app.UseAuthorization();
             app.UseSpa(spa =>
             {

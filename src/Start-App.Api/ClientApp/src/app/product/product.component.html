@@ -9,12 +9,11 @@
                 {{category.categoryName}}
             </mat-option>
         </mat-select>
-
     </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Subcategory</mat-label>
-        <mat-select [(ngModel)]="selectedSubcategoryId" name="subcategory">
+        <mat-select [(ngModel)]="selectedSubcategoryId" name="subcategory" (selectionChange)="onSubcategoryChanged($event)">
             <mat-option>
                 None
             </mat-option>
@@ -22,7 +21,6 @@
                 {{category.categoryName}}
             </mat-option>
         </mat-select>
-
     </mat-form-field>
 </form>
 

@@ -1,8 +1,9 @@
 export class RequestBase {
-    pageIndex: number;
-    pageSize: number;
-    sortColumn: string;
-    sortOrder: string
-    filterColumn: string;
-    filterQuery: string;
+
+    constructor(public pageIndex: number,
+        public pageSize: number,
+        public sortColumn: string,
+        public sortOrder: string,
+        public filterColumn: string,
+        public filterQuery: string) { }
 }      

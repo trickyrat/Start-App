@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Start_App.Data.Models;
@@ -24,21 +26,17 @@ namespace Start_App.Service.V2
 
         public Employee GetEmployeeById(int Id)
         {
-            var employee = _context.Employee.Find(Id);
+            var employee = _context.Employee.SingleOrDefault(x => x.BusinessEntityId == Id);
             return employee;
         }
 
         public PagedList<Employee> GetEmployees(EmployeeRequest request)
         {
             var employeesQuery = _context.Employee.AsQueryable();
-            var employees = PagedList<Employee>.Create(employeesQuery,
-                request.PageIndex,
-                request.PageSize,
-                request.SortColumn,
-                request.SortOrder,
-                request.FilterColumn,
-                request.FilterQuery);
-            return employees;
+            int total = employeesQuery.Count();
+            var data = employeesQuery.ToList();
+            var list = new PagedList<Employee>(data, total, request.PageIndex, request.PageSize);
+            return list;
         }
 
     }

@@ -13,7 +13,7 @@ namespace Start_App.Controllers.V1
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1")]
     [ApiVersion("1.2", Deprecated = true)]
-    [OpenApiTag("Employees", Description = "Production enviroment")]
+    [OpenApiTag("Employees", Description = "Production environment")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "v1")]
     public class EmployeesController : ControllerBase

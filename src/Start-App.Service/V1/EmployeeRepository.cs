@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Start_App.Data.Models;
 using Start_App.Domain.Entities;
@@ -25,21 +26,17 @@ namespace Start_App.Service.V1
 
         public async Task<Employee> GetEmployeeByIdAsync(int Id)
         {
-            var employee = await _context.Employee.FindAsync(Id);
+            var employee = await _context.Employee.SingleOrDefaultAsync(x => x.BusinessEntityId == Id);
             return employee;
         }
 
         public async Task<PagedList<Employee>> GetEmployeesAsync(EmployeeRequest request)
         {
             var employeesQuery = _context.Employee.AsQueryable();
-            var employees = await PagedList<Employee>.CreateAsync(employeesQuery,
-                request.PageIndex,
-                request.PageSize,
-                request.SortColumn,
-                request.SortOrder,
-                request.FilterColumn,
-                request.FilterQuery);
-            return employees;
+            int total = await employeesQuery.CountAsync();
+            var data = await employeesQuery.ToListAsync();
+            var list = new PagedList<Employee>(data, total, request.PageIndex, request.PageSize);
+            return list;
         }
     }
 }

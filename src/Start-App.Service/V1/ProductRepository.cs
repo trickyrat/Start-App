@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Start_App.Data.Models;
 using Start_App.Domain.Entities;
 using Start_App.Domain.RquestParameter;
@@ -34,16 +37,24 @@ namespace Start_App.Service.V1
         /// 获取产品
         /// </summary>
         /// <returns></returns>
-        public PagedList<Product> GetProducts(RequestBase request)
+        public PagedList<Product> GetProducts(ProductRequest request)
         {
-            var query = _context.Product.AsQueryable();
-            var list = PagedList<Product>.Create(query,
-                request.PageIndex,
-                request.PageSize,
-                request.SortColumn,
-                request.SortOrder,
-                request.FilterColumn,
-                request.FilterQuery);
+            //var query = _context.ProductCategory
+            //   .Include(p => p.ProductSubcategory)
+            //       .ThenInclude(sc => sc.Product)
+            //   .Where(c => c.ProductCategoryId == request.ProductCategoryId).AsQueryable();
+
+            //var query = _context.Product
+            //    .Include(p => p.ProductSubcategory)
+            //        .ThenInclude(sc => sc.ProductCategory)
+            //            .ThenInclude(c => c.ProductCategoryId == request.ProductCategoryId).AsQueryable();
+            _logger.LogInformation($"Request time: {DateTime.Now}, Request parameters: {JsonConvert.SerializeObject(request)}");
+            var query = _context.Product.Where(x => x.ProductSubcategoryId == request.ProductSubcatgoryId).AsQueryable();
+            int total = query.Count();
+            query = query.Skip(request.PageIndex * request.PageSize).Take(request.PageSize);
+            var data = query.ToList();
+            var list = new PagedList<Product>(data, total, request.PageIndex, request.PageSize);
+
             return list;
         }
 
