@@ -35,12 +35,14 @@ import { ProductImageComponent } from './product-list/product-image/product-imag
 import { ProductDepartmentComponent } from './product-list/product-department/product-department.component';
 import { PriceDisplayComponent } from './product-list/price-display/price-display.component';
 import { ProductComponent } from './product/product.component';
+import { AddEmployeeComponent } from './employee-list/addemployee/addemployee.component';
 
 // services
 import { HttpErrorHandler } from './services/http-error-handler.service';
 import { EmployeeService } from './services/employee.service';
 import { RequestCache, RequestCacheWithMap } from './services/request-cache.service';
 import { MessageService } from './services/message.service';
+
 
 
 
@@ -57,6 +59,7 @@ import { MessageService } from './services/message.service';
     ProductDepartmentComponent,
     PriceDisplayComponent,
     ProductComponent,
+    AddEmployeeComponent,
   ],
   imports: [
     BrowserModule,

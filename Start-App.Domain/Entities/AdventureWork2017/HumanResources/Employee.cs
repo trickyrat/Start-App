@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Start_App.Domain.Common;
 
 #nullable disable
 
@@ -37,5 +38,7 @@ namespace Start_App.Domain.Entities
         public virtual ICollection<EmployeePayHistory> EmployeePayHistories { get; set; }
         public virtual ICollection<JobCandidate> JobCandidates { get; set; }
         public virtual ICollection<PurchaseOrderHeader> PurchaseOrderHeaders { get; set; }
+
+        public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
     }
 }

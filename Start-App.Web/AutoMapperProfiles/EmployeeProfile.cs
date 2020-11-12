@@ -15,6 +15,8 @@ namespace Start_App.Profiles
             CreateMap<Employee, EmployeeDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.BusinessEntityId));
 
+            CreateMap<EmployeeDto, Employee>()
+                .ForMember(dest => dest.BusinessEntityId, opt => opt.MapFrom(src => src.Id));
 
             CreateMap<PagedList<Employee>, PagedList<EmployeeDto>>()
                 .ForCtorParam("data", opt => opt.MapFrom(src => src.Data))

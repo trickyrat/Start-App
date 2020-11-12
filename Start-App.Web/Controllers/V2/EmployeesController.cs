@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using Start_App.Domain.Entities;
 using Start_App.Domain.Dtos;
-using Start_App.Domain.RquestParameter;
-using Start_App.Helper;
-using Start_App.Service.V2;
+using Start_App.Application.V2.Interface;
+using Start_App.Domain.Common;
+using Start_App.Domain.Requests;
 
 namespace Start_App.V2.Controllers
 {
@@ -16,12 +16,10 @@ namespace Start_App.V2.Controllers
     [ApiExplorerSettings(GroupName = "v2")]
     public class EmployeesController : ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly IEmployeeRepository _repository;
 
-        public EmployeesController(IMapper mapper, IEmployeeRepository repository)
+        public EmployeesController(IEmployeeRepository repository)
         {
-            _mapper = mapper;
             _repository = repository;
         }
 
@@ -31,9 +29,8 @@ namespace Start_App.V2.Controllers
         [ProducesResponseType(typeof(PagedList<EmployeeDto>), 200)]
         public IActionResult Employees([FromQuery] EmployeeRequest request)
         {
-            PagedList<Employee> employees = _repository.GetEmployees(request);
-            var employeeDtos = _mapper.Map<PagedList<Employee>, PagedList<EmployeeDto>>(employees);
-            return new JsonResult(employeeDtos);
+            PagedList<EmployeeDto> employees = _repository.GetEmployees(request);
+            return new JsonResult(employees);
         }
 
         [HttpGet("{id}")]

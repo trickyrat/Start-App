@@ -2,11 +2,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
-using Start_App.Domain.Entities;
+using Start_App.Application.Common.Models;
+using Start_App.Application.HumanResources.Queries.V1;
+using Start_App.Application.V1.Interface;
 using Start_App.Domain.Dtos;
-using Start_App.Domain.RquestParameter;
-using Start_App.Helper;
-using Start_App.Service.V1;
+using Start_App.Domain.Entities;
 
 namespace Start_App.Controllers.V1
 {
@@ -23,28 +23,74 @@ namespace Start_App.Controllers.V1
 
         public EmployeesController(IMapper mapper, IEmployeeRepository repository)
         {
-            this._mapper = mapper;
-            this._repository = repository;
+            _mapper = mapper;
+            _repository = repository;
         }
 
         [HttpGet]
         [MapToApiVersion("1")]
         [ProducesResponseType(typeof(PagedList<EmployeeDto>), 200)]
-        public async Task<IActionResult> Employees([FromQuery] EmployeeRequest request)
+        public async Task<ActionResult<PagedList<EmployeeDto>>> GetEmployeesWithPagination([FromQuery] GetEmployeesWithPaginationQuery query)
         {
-            PagedList<Employee> employees = await _repository.GetEmployeesAsync(request);
-            var employeeDtos = _mapper.Map<PagedList<Employee>, PagedList<EmployeeDto>>(employees);
-            return new JsonResult(employeeDtos);
+            return await MediatR.Send(query);
         }
 
         [HttpGet("{id}")]
         [MapToApiVersion("1")]
-        [ProducesResponseType(typeof(Employee), 200)]
-        public async Task<IActionResult> Employees([FromQuery] int Id)
+        [ProducesResponseType(typeof(EmployeeDto), 200)]
+        public async Task<IActionResult> EmployeeDetails(int id)
         {
-            var employee = await _repository.GetEmployeeByIdAsync(Id);
+            var employee = await _repository.DetailsAsync(id);
             var employeeDto = _mapper.Map<EmployeeDto>(employee);
-            return new JsonResult(employeeDto);
+            return Ok(employeeDto);
+        }
+
+        [HttpPost]
+        [MapToApiVersion("1")]
+        [ProducesResponseType(typeof(EmployeeDto), 200)]
+        public async Task<IActionResult> CreateNewEmployee([FromBody] EmployeeDto employeeDtoToCreate)
+        {
+            var employeeToCreate = _mapper.Map<Employee>(employeeDtoToCreate);
+            var res = await _repository.AddAsync(employeeToCreate);
+            return Created(Request.Path + "/" + res.BusinessEntityId, employeeDtoToCreate);
+        }
+
+
+        [HttpPut("{id}")]
+        [MapToApiVersion("1")]
+        [ProducesResponseType(typeof(EmployeeDto), 200)]
+        public async Task<IActionResult> ModifyEmployee(int id, [FromBody] EmployeeDto employeeDtoToUpdate)
+        {
+            if (id != employeeDtoToUpdate.Id)
+            {
+                return BadRequest();
+            }
+            var employee = _mapper.Map<Employee>(employeeDtoToUpdate);
+            var result = await _repository.UpdateAsync(id, employee);
+            if (result is false)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return NoContent();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        [MapToApiVersion("1")]
+        [ProducesResponseType(typeof(EmployeeDto), 200)]
+        public async Task<IActionResult> DeleteEmployee(int id)
+        {
+            var result = await _repository.DeleteAsync(id);
+            if (result is false)
+            {
+                return NotFound(); // invalid id
+            }
+            else
+            {
+                return NoContent();
+            }
         }
     }
 }

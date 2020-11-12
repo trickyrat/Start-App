@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Start-App.Api\Start-App.Web.csproj" />
+    <ProjectReference Include="..\Start-App.Web\Start-App.Web.csproj" />
   </ItemGroup>
 
 

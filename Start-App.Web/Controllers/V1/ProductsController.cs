@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using Start_App.Domain.Entities;
 using Start_App.Domain.Dtos;
-using Start_App.Domain.RquestParameter;
-using Start_App.Helper;
-using Start_App.Service.V1;
+using Start_App.Domain.Requests;
+using Start_App.Domain.Common;
+using Start_App.Application.V1.Interface;
 
 namespace Start_App.Controllers.V1
 {
@@ -23,8 +23,8 @@ namespace Start_App.Controllers.V1
 
         public ProductsController(IProductRepository repository, IMapper mapper)
         {
-            this._mapper = mapper;
-            this._repository = repository;
+            _mapper = mapper;
+            _repository = repository;
         }
 
         [HttpGet]
