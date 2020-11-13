@@ -2,10 +2,13 @@
 // Licensed under the MIT LICENSE.
 
 using System;
+using AutoMapper;
+using Start_App.Application.Common.Mappings;
+using Start_App.Domain.Entities;
 
-namespace Start_App.Domain.Dtos
+namespace Start_App.Application.HumanResources.Queries.V1.GetEmployeesWithPagination
 {
-    public class EmployeeDto
+    public class EmployeeDto : IMapFrom<Employee>
     {
         public int Id { get; set; }
         public string NationalIdnumber { get; set; }
@@ -16,8 +19,12 @@ namespace Start_App.Domain.Dtos
         public string Gender { get; set; }
         public DateTime HireDate { get; set; }
         public bool? SalariedFlag { get; set; }
-        public short VacationHours { get; set; }
-        public short SickLeaveHours { get; set; }
         public bool? CurrentFlag { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Employee, EmployeeDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.BusinessEntityId));
+        }
     }
 }

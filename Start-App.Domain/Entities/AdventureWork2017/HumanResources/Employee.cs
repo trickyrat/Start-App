@@ -6,7 +6,7 @@ using Start_App.Domain.Common;
 
 namespace Start_App.Domain.Entities
 {
-    public partial class Employee
+    public class Employee : AuditableEntity, IHasDomainEvent
     {
         public Employee()
         {
@@ -31,6 +31,7 @@ namespace Start_App.Domain.Entities
         public bool? CurrentFlag { get; set; }
         public Guid Rowguid { get; set; }
         public DateTime ModifiedDate { get; set; }
+
 
         public virtual Person BusinessEntity { get; set; }
         public virtual SalesPerson SalesPerson { get; set; }

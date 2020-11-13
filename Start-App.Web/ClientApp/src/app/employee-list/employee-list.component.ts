@@ -16,7 +16,7 @@ export class EmployeeListComponent
   implements OnInit {
   public displayedColumns: string[] = ['Id', 'NationalIdnumber', 'OrganizationLevel', 'JobTitle', 'BirthDate', 'MaritalStatus', 'Gender', 'HireDate', 'SalariedFlag', 'VacationHours', 'SickLeaveHours', 'CurrentFlag']
   public employees: MatTableDataSource<Employee>;
-  defaultPageIndex: number = 0;
+  defaultPageIndex: number = 1;
   defaultPageSize: number = 10;
   public defaultSortColumn: string = "businessEntityId";
   public defaultSortOrder: string = "asc";

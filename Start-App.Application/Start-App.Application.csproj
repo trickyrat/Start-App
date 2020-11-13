@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="HumanResources\EvenetHandlers\" />
+    <Folder Include="HumanResources\V2\" />
     <Folder Include="Person\V2\" />
     <Folder Include="Production\V2\" />
     <Folder Include="Sales\V1\" />

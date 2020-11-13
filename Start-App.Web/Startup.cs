@@ -1,18 +1,20 @@
 ﻿// Copyright (c) Trickyrat All Rights Reserved.
 // Licensed under the MIT LICENSE.
 
-using System;
-using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Start_App.Domain.Context;
+using Start_App.Application;
+using Start_App.Application.Common.Interfaces;
+using Start_App.Filter;
+using Start_App.Infrastructure;
+using Start_App.Infrastructure.Persistence;
+using Start_App.Services;
 
 namespace Start_App
 {
@@ -25,33 +27,46 @@ namespace Start_App
 
         public IConfiguration Configuration { get; }
 
-        private static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
-        {
-            builder.AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information)
-            .AddConsole();
-        });
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication();
+            services.AddInfrastructure(Configuration);
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddHttpContextAccessor();
+            services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
+
+
+            services.AddControllersWithViews(options =>
+                options.Filters.Add(new ApiExceptionFilterAttribute()))
+                    .AddFluentValidation();
+
+            services.AddRazorPages();
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
 
             services.AddHttpClient();
-
-            services.AddScoped<Service.V1.IEmployeeRepository, Service.V1.EmployeeRepository>();
-            services.AddScoped<Service.V2.IEmployeeRepository, Service.V2.EmployeeRepository>();
-            services.AddScoped<Service.V1.IProductRepository, Service.V1.ProductRepository>();
 
             services.AddSwaggerDocument(document =>
             {
                 document.DocumentName = "v1";
                 document.ApiGroupNames = new string[] { "v1" };
-                document.Title = "线上版本";
+                document.Title = "Product Environment";
                 document.UseControllerSummaryAsTagDescription = true;
             });
             services.AddSwaggerDocument(document =>
             {
                 document.DocumentName = "v2";
                 document.ApiGroupNames = new string[] { "v2" };
-                document.Title = "测试版本";
+                document.Title = "Development Environment";
                 document.UseControllerSummaryAsTagDescription = true;
             });
             // api version control
@@ -68,21 +83,18 @@ namespace Start_App
             });
 
 
-            // database context
-            services.AddDbContext<AdventureWorks2017Context>(options =>
-            {
-                options.UseLoggerFactory(_loggerFactory)
-                .UseSqlServer(Configuration.GetConnectionString("SqlServerString"));
-            });
+            //// database context
+            ////services.AddDbContext<AdventureWorks2017Context>(options =>
+            ////{
+            ////    options.UseLoggerFactory(_loggerFactory)
+            ////    .UseSqlServer(Configuration.GetConnectionString("SqlServerString"));
+            ////});
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
             services.AddControllers();
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,26 +107,32 @@ namespace Start_App
             else
             {
                 app.UseExceptionHandler("/Error");
-                //app.UseHsts();
+                app.UseHsts();
             }
 
+            app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
 
 
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseIdentityServer();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-               endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id}");
+                endpoints.MapControllerRoute(
+                     name: "default",
+                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
             //app.UseAuthorization();
@@ -123,7 +141,8 @@ namespace Start_App
                 spa.Options.SourcePath = "ClientApp";
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

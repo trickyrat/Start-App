@@ -3,7 +3,6 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
-using StackExchange.Redis;
 
 namespace Start_App
 {

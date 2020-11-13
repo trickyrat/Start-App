@@ -1,19 +1,37 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Start_App.Application.Common.Interfaces;
+using Start_App.Domain.Common;
 using Start_App.Domain.Entities;
+using Start_App.Infrastructure.Identity;
 
 #nullable disable
 
-namespace Start_App.Domain.Common
+namespace Start_App.Infrastructure.Persistence
 {
-    public partial class AdventureWorks2017Context : DbContext
+    public partial class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {
-        public AdventureWorks2017Context()
-        {
-        }
+        private readonly ICurrentUserService _currentUserService;
+        private readonly IDateTime _dateTime;
+        private readonly IDomainEventService _domainEventService;
 
-        public AdventureWorks2017Context(DbContextOptions<AdventureWorks2017Context> options)
-            : base(options)
+        public ApplicationDbContext(
+            DbContextOptions options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions,
+            ICurrentUserService currentUserService,
+            IDomainEventService domainEventService,
+            IDateTime dateTime) : base(options, operationalStoreOptions)
         {
+            _currentUserService = currentUserService;
+            _dateTime = dateTime;
+            _domainEventService = domainEventService;
         }
 
         public virtual DbSet<Address> Addresses { get; set; }
@@ -105,8 +123,39 @@ namespace Start_App.Domain.Common
         public virtual DbSet<WorkOrder> WorkOrders { get; set; }
         public virtual DbSet<WorkOrderRouting> WorkOrderRoutings { get; set; }
 
-        // Unable to generate entity type for table 'Production.Document' since its primary key could not be scaffolded. Please see the warning messages.
-        // Unable to generate entity type for table 'Production.ProductDocument' since its primary key could not be scaffolded. Please see the warning messages.
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken =new CancellationToken())
+        {
+            foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        entry.Entity.Created = _dateTime.Now;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
+                        entry.Entity.LastModified = _dateTime.Now;
+                        break;
+                }        
+            }
+            int result = await base.SaveChangesAsync(cancellationToken);
+            await DispatchEvents(cancellationToken);
+            return result;
+        }
+
+        public async Task DispatchEvents(CancellationToken cancellationToken)
+        {
+            var domainEventEntities = ChangeTracker.Entries<IHasDomainEvent>()
+                .Select(x => x.Entity.DomainEvents)
+                .SelectMany(x => x)
+                .ToArray();
+            foreach (var domainEvent in domainEventEntities)
+            {
+                await _domainEventService.Publish(domainEvent);
+            }
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -115,62 +164,8 @@ namespace Start_App.Domain.Common
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Address>(entity =>
-            {
-                entity.ToTable("Address", "Person");
-
-                entity.HasComment("Street address information for customers, employees, and vendors.");
-
-                entity.HasIndex(e => e.Rowguid, "AK_Address_rowguid")
-                    .IsUnique();
-
-                entity.HasIndex(e => new { e.AddressLine1, e.AddressLine2, e.City, e.StateProvinceId, e.PostalCode }, "IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.StateProvinceId, "IX_Address_StateProvinceID");
-
-                entity.Property(e => e.AddressId)
-                    .HasColumnName("AddressID")
-                    .HasComment("Primary key for Address records.");
-
-                entity.Property(e => e.AddressLine1)
-                    .IsRequired()
-                    .HasMaxLength(60)
-                    .HasComment("First street address line.");
-
-                entity.Property(e => e.AddressLine2)
-                    .HasMaxLength(60)
-                    .HasComment("Second street address line.");
-
-                entity.Property(e => e.City)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasComment("Name of the city.");
-
-                entity.Property(e => e.ModifiedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())")
-                    .HasComment("Date and time the record was last updated.");
-
-                entity.Property(e => e.PostalCode)
-                    .IsRequired()
-                    .HasMaxLength(15)
-                    .HasComment("Postal code for the street address.");
-
-                entity.Property(e => e.Rowguid)
-                    .HasColumnName("rowguid")
-                    .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
-
-                entity.Property(e => e.StateProvinceId)
-                    .HasColumnName("StateProvinceID")
-                    .HasComment("Unique identification number for the state or province. Foreign key to StateProvince table.");
-
-                entity.HasOne(d => d.StateProvince)
-                    .WithMany(p => p.Addresses)
-                    .HasForeignKey(d => d.StateProvinceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-            });
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<AddressType>(entity =>
             {
@@ -842,100 +837,7 @@ namespace Start_App.Domain.Common
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
-            modelBuilder.Entity<Employee>(entity =>
-            {
-                entity.HasKey(e => e.BusinessEntityId)
-                    .HasName("PK_Employee_BusinessEntityID");
-
-                entity.ToTable("Employee", "HumanResources");
-
-                entity.HasComment("Employee information such as salary, department, and title.");
-
-                entity.HasIndex(e => e.LoginId, "AK_Employee_LoginID")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.NationalIdnumber, "AK_Employee_NationalIDNumber")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Rowguid, "AK_Employee_rowguid")
-                    .IsUnique();
-
-                entity.Property(e => e.BusinessEntityId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("BusinessEntityID")
-                    .HasComment("Primary key for Employee records.  Foreign key to BusinessEntity.BusinessEntityID.");
-
-                entity.Property(e => e.BirthDate)
-                    .HasColumnType("date")
-                    .HasComment("Date of birth.");
-
-                entity.Property(e => e.CurrentFlag)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))")
-                    .HasComment("0 = Inactive, 1 = Active");
-
-                entity.Property(e => e.Gender)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsFixedLength(true)
-                    .HasComment("M = Male, F = Female");
-
-                entity.Property(e => e.HireDate)
-                    .HasColumnType("date")
-                    .HasComment("Employee hired on this date.");
-
-                entity.Property(e => e.JobTitle)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasComment("Work title such as Buyer or Sales Representative.");
-
-                entity.Property(e => e.LoginId)
-                    .IsRequired()
-                    .HasMaxLength(256)
-                    .HasColumnName("LoginID")
-                    .HasComment("Network login.");
-
-                entity.Property(e => e.MaritalStatus)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsFixedLength(true)
-                    .HasComment("M = Married, S = Single");
-
-                entity.Property(e => e.ModifiedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())")
-                    .HasComment("Date and time the record was last updated.");
-
-                entity.Property(e => e.NationalIdnumber)
-                    .IsRequired()
-                    .HasMaxLength(15)
-                    .HasColumnName("NationalIDNumber")
-                    .HasComment("Unique national identification number such as a social security number.");
-
-                entity.Property(e => e.OrganizationLevel)
-                    .HasComputedColumnSql("([OrganizationNode].[GetLevel]())", false)
-                    .HasComment("The depth of the employee in the corporate hierarchy.");
-
-                entity.Property(e => e.Rowguid)
-                    .HasColumnName("rowguid")
-                    .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
-
-                entity.Property(e => e.SalariedFlag)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))")
-                    .HasComment("Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.");
-
-                entity.Property(e => e.SickLeaveHours).HasComment("Number of available sick leave hours.");
-
-                entity.Property(e => e.VacationHours).HasComment("Number of available vacation hours.");
-
-                entity.HasOne(d => d.BusinessEntity)
-                    .WithOne(p => p.Employee)
-                    .HasForeignKey<Employee>(d => d.BusinessEntityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-            });
-
+         
             modelBuilder.Entity<EmployeeDepartmentHistory>(entity =>
             {
                 entity.HasKey(e => new { e.BusinessEntityId, e.StartDate, e.DepartmentId, e.ShiftId })

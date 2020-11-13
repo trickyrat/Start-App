@@ -1,10 +1,10 @@
 {
-  "name": "client-app",
+  "name": "start-app.web",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "echo starting... && ng serve",
-    "build:ssr": "ng run Start-App:server:dev",
+    "build:ssr": "ng run Start-App.Web:server:dev",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

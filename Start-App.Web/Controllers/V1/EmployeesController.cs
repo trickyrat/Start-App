@@ -1,96 +1,55 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using Start_App.Application.Common.Models;
-using Start_App.Application.HumanResources.Queries.V1;
-using Start_App.Application.V1.Interface;
-using Start_App.Domain.Dtos;
-using Start_App.Domain.Entities;
+using Start_App.Application.HumanResources.Commands.V1.CreateEmployee;
+using Start_App.Application.HumanResources.Commands.V1.DeleteEmployee;
+using Start_App.Application.HumanResources.Commands.V1.UpdateEmployee;
+using Start_App.Application.HumanResources.Queries.V1.GetEmployeesWithPagination;
+
 
 namespace Start_App.Controllers.V1
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1")]
-    [ApiVersion("1.2", Deprecated = true)]
     [OpenApiTag("Employees", Description = "Production environment")]
-    [ApiController]
+    //[Authorize]
     [ApiExplorerSettings(GroupName = "v1")]
-    public class EmployeesController : ControllerBase
+    public class EmployeesController : ApiController
     {
-        private readonly IMapper _mapper;
-        private readonly IEmployeeRepository _repository;
-
-        public EmployeesController(IMapper mapper, IEmployeeRepository repository)
-        {
-            _mapper = mapper;
-            _repository = repository;
-        }
-
         [HttpGet]
         [MapToApiVersion("1")]
-        [ProducesResponseType(typeof(PagedList<EmployeeDto>), 200)]
         public async Task<ActionResult<PagedList<EmployeeDto>>> GetEmployeesWithPagination([FromQuery] GetEmployeesWithPaginationQuery query)
         {
-            return await MediatR.Send(query);
-        }
-
-        [HttpGet("{id}")]
-        [MapToApiVersion("1")]
-        [ProducesResponseType(typeof(EmployeeDto), 200)]
-        public async Task<IActionResult> EmployeeDetails(int id)
-        {
-            var employee = await _repository.DetailsAsync(id);
-            var employeeDto = _mapper.Map<EmployeeDto>(employee);
-            return Ok(employeeDto);
+            return await Mediator.Send(query);
         }
 
         [HttpPost]
         [MapToApiVersion("1")]
-        [ProducesResponseType(typeof(EmployeeDto), 200)]
-        public async Task<IActionResult> CreateNewEmployee([FromBody] EmployeeDto employeeDtoToCreate)
+        public async Task<ActionResult<int>> Create(CreateEmployeeCommand command)
         {
-            var employeeToCreate = _mapper.Map<Employee>(employeeDtoToCreate);
-            var res = await _repository.AddAsync(employeeToCreate);
-            return Created(Request.Path + "/" + res.BusinessEntityId, employeeDtoToCreate);
+            return await Mediator.Send(command);
         }
 
 
         [HttpPut("{id}")]
         [MapToApiVersion("1")]
-        [ProducesResponseType(typeof(EmployeeDto), 200)]
-        public async Task<IActionResult> ModifyEmployee(int id, [FromBody] EmployeeDto employeeDtoToUpdate)
+        public async Task<IActionResult> Update(int id, UpdateEmployeeCommand command)
         {
-            if (id != employeeDtoToUpdate.Id)
+            if (id != command.BusinessEntityId)
             {
                 return BadRequest();
             }
-            var employee = _mapper.Map<Employee>(employeeDtoToUpdate);
-            var result = await _repository.UpdateAsync(id, employee);
-            if (result is false)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return NoContent();
-            }
+            await Mediator.Send(command);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         [MapToApiVersion("1")]
-        [ProducesResponseType(typeof(EmployeeDto), 200)]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
-            var result = await _repository.DeleteAsync(id);
-            if (result is false)
-            {
-                return NotFound(); // invalid id
-            }
-            else
-            {
-                return NoContent();
-            }
+            await Mediator.Send(new DeleteEmployeeCommand { BusinessEntityId = id });
+            return NoContent();
         }
     }
 }

@@ -13,9 +13,8 @@ using MediatR;
 using Start_App.Application.Common.Interfaces;
 using Start_App.Application.Common.Mappings;
 using Start_App.Application.Common.Models;
-using Start_App.Domain.Dtos;
 
-namespace Start_App.Application.HumanResources.Queries.V1
+namespace Start_App.Application.HumanResources.Queries.V1.GetEmployeesWithPagination
 {
     public class GetEmployeesWithPaginationQuery : IRequest<PagedList<EmployeeDto>>
     {
