@@ -12,11 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start-App.Test", "Start-App.Test\Start-App.Test.csproj", "{8E5F8BE6-E77E-4DE6-B7B7-A35DA605E213}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start-App.UnitTest", "Start-App.UnitTest\Start-App.UnitTest.csproj", "{8E5F8BE6-E77E-4DE6-B7B7-A35DA605E213}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start-App.Infrastructure", "Start-App.Infrastructure\Start-App.Infrastructure.csproj", "{DDFD651E-FDFA-4B45-A510-04B42E535D55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Start-App.Application", "Start-App.Application\Start-App.Application.csproj", "{B697FDBE-27CE-48DE-84BA-EE46D44C6A2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start-App.Application", "Start-App.Application\Start-App.Application.csproj", "{B697FDBE-27CE-48DE-84BA-EE46D44C6A2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

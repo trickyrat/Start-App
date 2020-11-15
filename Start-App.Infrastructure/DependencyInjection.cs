@@ -36,7 +36,7 @@ namespace Start_App.Infrastructure
                 services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseLoggerFactory(_loggerFactory)
                     .UseSqlServer(
-                        configuration.GetConnectionString("SqlServerString"),
+                        configuration.GetConnectionString("DefaultConnection"),
                         b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
             }
 

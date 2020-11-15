@@ -6,11 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="HumanResources\V2\" />
+    <Compile Remove="HumanResources\V2\**" />
+    <Compile Remove="Sales\**" />
+    <EmbeddedResource Remove="HumanResources\V2\**" />
+    <EmbeddedResource Remove="Sales\**" />
+    <None Remove="HumanResources\V2\**" />
+    <None Remove="Sales\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Person\V2\" />
     <Folder Include="Production\V2\" />
-    <Folder Include="Sales\V1\" />
-    <Folder Include="Sales\V2\" />
   </ItemGroup>
 
   <ItemGroup>
