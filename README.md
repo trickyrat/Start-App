@@ -3,7 +3,7 @@
 Welcome to Start-App!
 
 ## Instroduction
-Build modern web with ASP.NET CORE WEBAPI 3.1 + Angular 9 + OAuth2.0 + SwaggerUI + RESTful API
+Build modern web with ASP.NET CORE WEBAPI 3.1 + Angular 9 + OAuth2.0 + SwaggerUI + RESTful API + CleanArchitecture
 
 ## Dependencies
 
@@ -27,5 +27,5 @@ Build modern web with ASP.NET CORE WEBAPI 3.1 + Angular 9 + OAuth2.0 + SwaggerUI
 > 1. clone repository
 > 2. cd src/Start-App/Start-App.Api
 > 3. run `dotnet restore` and add your own database connection string in appsettings.json  
-> 4. run `dotnet run` and open `localhost:5000` in browser.
+> 4. run `dotnet run` and open `localhost:4200` in browser.
 
