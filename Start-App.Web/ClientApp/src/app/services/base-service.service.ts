@@ -20,3 +20,4 @@ export abstract class BaseService {
 
   abstract post<T>(item: T): Observable<T>;
 }
+

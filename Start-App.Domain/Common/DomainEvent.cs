@@ -13,6 +13,7 @@ namespace Start_App.Domain.Common
     {
         public List<DomainEvent> DomainEvents { get; set; }
     }
+
     public abstract class DomainEvent
     {
         protected DomainEvent()

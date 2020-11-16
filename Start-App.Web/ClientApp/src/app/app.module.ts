@@ -22,6 +22,8 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
 import { MatCardModule } from "@angular/material/card";
 import { MatSelectModule } from "@angular/material/select";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatRadioModule } from "@angular/material/radio";
 
 // components
 import { AppComponent } from './app.component';
@@ -35,15 +37,13 @@ import { ProductImageComponent } from './product-list/product-image/product-imag
 import { ProductDepartmentComponent } from './product-list/product-department/product-department.component';
 import { PriceDisplayComponent } from './product-list/price-display/price-display.component';
 import { ProductComponent } from './product/product.component';
-import { AddEmployeeComponent } from './employee-list/addemployee/addemployee.component';
 
 // services
 import { HttpErrorHandler } from './services/http-error-handler.service';
 import { EmployeeService } from './services/employee.service';
 import { RequestCache, RequestCacheWithMap } from './services/request-cache.service';
 import { MessageService } from './services/message.service';
-
-
+import { EmployeeAddComponent } from './employee-list/employee-add/employee-add.component';
 
 
 @NgModule({
@@ -59,7 +59,7 @@ import { MessageService } from './services/message.service';
     ProductDepartmentComponent,
     PriceDisplayComponent,
     ProductComponent,
-    AddEmployeeComponent,
+    EmployeeAddComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +82,9 @@ import { MessageService } from './services/message.service';
     MatPaginatorModule,
     MatSortModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule
   ],
   providers: [
     HttpErrorHandler,

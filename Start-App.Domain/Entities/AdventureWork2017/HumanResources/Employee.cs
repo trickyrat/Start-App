@@ -31,7 +31,7 @@ namespace Start_App.Domain.Entities
         public bool? CurrentFlag { get; set; }
         public Guid Rowguid { get; set; }
         public DateTime ModifiedDate { get; set; }
-
+        public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
 
         public virtual Person BusinessEntity { get; set; }
         public virtual SalesPerson SalesPerson { get; set; }
@@ -40,6 +40,6 @@ namespace Start_App.Domain.Entities
         public virtual ICollection<JobCandidate> JobCandidates { get; set; }
         public virtual ICollection<PurchaseOrderHeader> PurchaseOrderHeaders { get; set; }
 
-        public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
+        
     }
 }

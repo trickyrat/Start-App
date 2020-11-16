@@ -78,26 +78,6 @@ namespace Start_App.Application.Common.Interfaces
         public  DbSet<TransactionHistory> TransactionHistories { get; set; }
         public  DbSet<TransactionHistoryArchive> TransactionHistoryArchives { get; set; }
         public  DbSet<UnitMeasure> UnitMeasures { get; set; }
-        public  DbSet<VAdditionalContactInfo> VAdditionalContactInfos { get; set; }
-        public  DbSet<VEmployee> VEmployees { get; set; }
-        public  DbSet<VEmployeeDepartment> VEmployeeDepartments { get; set; }
-        public  DbSet<VEmployeeDepartmentHistory> VEmployeeDepartmentHistories { get; set; }
-        public  DbSet<VIndividualCustomer> VIndividualCustomers { get; set; }
-        public  DbSet<VJobCandidate> VJobCandidates { get; set; }
-        public  DbSet<VJobCandidateEducation> VJobCandidateEducations { get; set; }
-        public  DbSet<VJobCandidateEmployment> VJobCandidateEmployments { get; set; }
-        public  DbSet<VPersonDemographic> VPersonDemographics { get; set; }
-        public  DbSet<VProductAndDescription> VProductAndDescriptions { get; set; }
-        public  DbSet<VProductModelCatalogDescription> VProductModelCatalogDescriptions { get; set; }
-        public  DbSet<VProductModelInstruction> VProductModelInstructions { get; set; }
-        public  DbSet<VSalesPerson> VSalesPeople { get; set; }
-        public  DbSet<VSalesPersonSalesByFiscalYear> VSalesPersonSalesByFiscalYears { get; set; }
-        public  DbSet<VStateProvinceCountryRegion> VStateProvinceCountryRegions { get; set; }
-        public  DbSet<VStoreWithAddress> VStoreWithAddresses { get; set; }
-        public  DbSet<VStoreWithContact> VStoreWithContacts { get; set; }
-        public  DbSet<VStoreWithDemographic> VStoreWithDemographics { get; set; }
-        public  DbSet<VVendorWithAddress> VVendorWithAddresses { get; set; }
-        public  DbSet<VVendorWithContact> VVendorWithContacts { get; set; }
         public  DbSet<Vendor> Vendors { get; set; }
         public  DbSet<WorkOrder> WorkOrders { get; set; }
         public  DbSet<WorkOrderRouting> WorkOrderRoutings { get; set; }

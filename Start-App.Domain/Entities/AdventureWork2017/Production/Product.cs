@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Start_App.Domain.Common;
 
 #nullable disable
 
 namespace Start_App.Domain.Entities
 {
-    public partial class Product
+    public class Product : AuditableEntity, IHasDomainEvent
     {
         public Product()
         {
@@ -47,8 +48,7 @@ namespace Start_App.Domain.Entities
         public DateTime SellStartDate { get; set; }
         public DateTime? SellEndDate { get; set; }
         public DateTime? DiscontinuedDate { get; set; }
-        public Guid Rowguid { get; set; }
-        public DateTime ModifiedDate { get; set; }
+
 
         public virtual ProductModel ProductModel { get; set; }
         public virtual ProductSubcategory ProductSubcategory { get; set; }
@@ -67,5 +67,7 @@ namespace Start_App.Domain.Entities
         public virtual ICollection<SpecialOfferProduct> SpecialOfferProducts { get; set; }
         public virtual ICollection<TransactionHistory> TransactionHistories { get; set; }
         public virtual ICollection<WorkOrder> WorkOrders { get; set; }
+
+        public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
     }
 }

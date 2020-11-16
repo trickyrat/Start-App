@@ -1,14 +1,13 @@
-<h1>员工列表</h1>
-<p>使用AdventureWorks2017数据库数据mock</p>
+<h1>Employee List</h1>
 
 <p *ngIf="!employees"><em>Loading...</em></p>
 
 <div class="commands text-right" *ngIf="employees">
-  <button type="button" [routerLink]="['/employess']" class="btn btn-success">添加一名新员工</button>
+  <button type="button" [routerLink]="['/employees-add']" class="btn btn-success">New</button>
 </div>
 
 <mat-form-field [hidden]="!employees">
-  <input matInput (keyup)="loadData($event.target.value)" placeholder="通过名称过滤">
+  <input matInput (keyup)="loadData($event.target.value)" placeholder="Filter">
 </mat-form-field>
 
 
@@ -20,7 +19,7 @@
   </ng-container>
 
   <ng-container matColumnDef="NationalIdnumber">
-    <th mat-header-cell *matHeaderCellDef> 国家ID </th>
+    <th mat-header-cell *matHeaderCellDef> NationalId </th>
     <td mat-cell *matCellDef="let element"> {{element.nationalIdnumber}} </td>
   </ng-container>
 
@@ -51,7 +50,7 @@
   </ng-container>
 
   <ng-container matColumnDef="SalariedFlag">
-    <th mat-header-cell *matHeaderCellDef> 是否有薪 </th>
+    <th mat-header-cell *matHeaderCellDef> 是否发放薪水 </th>
     <td mat-cell *matCellDef="let element"> {{element.salariedFlag}} </td>
   </ng-container>
   <ng-container matColumnDef="VacationHours">

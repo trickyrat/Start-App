@@ -1,8 +1,11 @@
 ﻿using System;
+using AutoMapper;
+using Start_App.Application.Common.Mappings;
+using Start_App.Domain.Entities;
 
-namespace Start_App.Domain.Dtos
+namespace Start_App.Application.Production.Queries.V1.GetProduct
 {
-    public class ProductDto
+    public class ProductDto : IMapFrom<Product>
     {
         public string Name { get; set; }
         public string ProductNumber { get; set; }
@@ -24,5 +27,10 @@ namespace Start_App.Domain.Dtos
         public DateTime SellStartDate { get; set; }
         public DateTime? SellEndDate { get; set; }
         public DateTime? DiscontinuedDate { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Product, ProductDto>();
+        }
     }
 }

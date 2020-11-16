@@ -36,12 +36,12 @@ namespace Start_App.Application.Common.Models
         /// <summary>
         /// 是否有上一页
         /// </summary>
-        public bool HasPrevious => PageIndex > 1;
+        public bool HasPreviousPage => PageIndex > 1;
 
         /// <summary>
         /// 是否有下一页
         /// </summary>
-        public bool HasNext => PageIndex < TotalPages;
+        public bool HasNextPage => PageIndex < TotalPages;
 
 
         public PagedList(List<T> data, int total, int pageIndex, int pageSize)

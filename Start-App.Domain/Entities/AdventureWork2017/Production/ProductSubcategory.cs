@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Start_App.Domain.Common;
 
 #nullable disable
 
 namespace Start_App.Domain.Entities
 {
-    public partial class ProductSubcategory
+    public class ProductSubcategory : AuditableEntity, IHasDomainEvent
     {
         public ProductSubcategory()
         {
@@ -13,12 +13,12 @@ namespace Start_App.Domain.Entities
         }
 
         public int ProductSubcategoryId { get; set; }
-        public int ProductCategoryId { get; set; }
         public string Name { get; set; }
-        public Guid Rowguid { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public int ProductCategoryId { get; set; }
 
         public virtual ProductCategory ProductCategory { get; set; }
         public virtual ICollection<Product> Products { get; set; }
+
+        public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
     }
 }

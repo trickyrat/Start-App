@@ -9,6 +9,7 @@
     <RootNamespace>Start_App</RootNamespace>
     <StartupObject>Start_App.Program</StartupObject>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.3.0" />

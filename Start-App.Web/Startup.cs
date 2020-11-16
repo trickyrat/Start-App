@@ -38,7 +38,7 @@ namespace Start_App
 
 
             services.AddControllersWithViews(options =>
-                options.Filters.Add(new ApiExceptionFilterAttribute()))
+                options.Filters.Add<ApiExceptionFilterAttribute>())
                     .AddFluentValidation();
 
             services.AddRazorPages();
@@ -69,6 +69,7 @@ namespace Start_App
                 document.Title = "Development Environment";
                 document.UseControllerSummaryAsTagDescription = true;
             });
+
             // api version control
             services.AddApiVersioning(options =>
             {

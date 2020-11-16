@@ -18,11 +18,11 @@ export class ProductService {
   }
 
   getProductCategory(): Observable<ProductCategory[]> {
-    return this.httpClient.get<Array<ProductCategory>>(this.baseUrl + this.apiUrl + "productcategory");
+    return this.httpClient.get<Array<ProductCategory>>(this.baseUrl + this.apiUrl + "category");
   }
 
   getProductSubcategory(categoryId: number): Observable<ProductSubcategory[]> {
-    return this.httpClient.get<ProductSubcategory[]>(this.baseUrl + this.apiUrl + "productsubcategory?subCategoryId=" + categoryId)
+    return this.httpClient.get<ProductSubcategory[]>(this.baseUrl + this.apiUrl + "category/" + categoryId)
   }
 
   // 获取产品
