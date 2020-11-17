@@ -6,6 +6,7 @@ using Start_App.Application.Common.Models;
 using Start_App.Application.HumanResources.Commands.V1.CreateEmployee;
 using Start_App.Application.HumanResources.Commands.V1.DeleteEmployee;
 using Start_App.Application.HumanResources.Commands.V1.UpdateEmployee;
+using Start_App.Application.HumanResources.Queries.V1.GetEmployee;
 using Start_App.Application.HumanResources.Queries.V1.GetEmployeesWithPagination;
 
 
@@ -20,6 +21,13 @@ namespace Start_App.Controllers.V1
         [HttpGet]
         [MapToApiVersion("1")]
         public async Task<ActionResult<PagedList<EmployeeDto>>> GetEmployeesWithPagination([FromQuery] GetEmployeesWithPaginationQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("{id}")]
+        [MapToApiVersion("1")]
+        public async Task<ActionResult<EmployeeDetailDto>> GetEmployee([FromRoute]GetEmployeeDetailQuery query)
         {
             return await Mediator.Send(query);
         }

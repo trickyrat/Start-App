@@ -179,22 +179,11 @@ export class EmployeeService
 
   getData<PagedList>(
     pageIndex: number,
-    pageSize: number,
-    sortColumn: string,
-    sortOrder: string,
-    filterColumn: string,
-    filterQuery: string): Observable<PagedList> {
+    pageSize: number): Observable<PagedList> {
     let url = this.baseUrl + 'api/v1/employees';
     let params = new HttpParams()
       .set("pageIndex", pageIndex.toString())
-      .set("pageSize", pageSize.toString())
-      .set("sortColumn", sortColumn)
-      .set("sortOrder", sortOrder);
-    if (filterQuery) {
-      params = params
-        .set("filterColumn", filterColumn)
-        .set("sortOrder", sortOrder);
-    }
+      .set("pageSize", pageSize.toString());
     return this.http.get<PagedList>(url, { params });
   }
 

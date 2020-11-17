@@ -14,13 +14,13 @@ import { PagedList } from '../models/pagedList';
 })
 export class EmployeeListComponent
   implements OnInit {
-  public displayedColumns: string[] = ['Id', 'NationalIdnumber', 'OrganizationLevel', 'JobTitle', 'BirthDate', 'MaritalStatus', 'Gender', 'HireDate', 'SalariedFlag', 'VacationHours', 'SickLeaveHours', 'CurrentFlag']
+  public displayedColumns: string[] = ['Id', 'NationalIdnumber', 'OrganizationLevel', 'JobTitle', 'MaritalStatus', 'Gender']
   public employees: MatTableDataSource<Employee>;
   defaultPageIndex: number = 1;
   defaultPageSize: number = 10;
-  public defaultSortColumn: string = "businessEntityId";
-  public defaultSortOrder: string = "asc";
-  defaultFilterColumn: string = "businessEntityId";
+  // public defaultSortColumn: string = "businessEntityId";
+  // public defaultSortOrder: string = "asc";
+  // defaultFilterColumn: string = "businessEntityId";
   filterQuery: string = null;
 
 
@@ -46,17 +46,10 @@ export class EmployeeListComponent
   }
 
   getData(event: PageEvent) {
-    let sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
-    let sortOrder = (this.sort) ? this.sort.direction : this.defaultSortOrder;
-    let filterColumn = (this.defaultFilterColumn) ? this.defaultFilterColumn : null;
-    let filterQuery = (this.filterQuery) ? this.filterQuery : null;
+    console.log("event.pageIndex: " + event.pageIndex);
     this.service.getData<PagedList<Employee>>(
       event.pageIndex,
-      event.pageSize,
-      sortColumn,
-      sortOrder,
-      filterColumn,
-      filterQuery)
+      event.pageSize)
       .subscribe(result => {
         this.paginator.length = result.totalCount;
         this.paginator.pageIndex = result.pageIndex;

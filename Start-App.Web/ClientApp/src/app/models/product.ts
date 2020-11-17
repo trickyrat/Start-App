@@ -57,7 +57,7 @@ export class ProductCategory {
 export class ProductSubcategory {
     constructor(
         public subcategoryId: number,
-        public categoryName: string) {
+        public subcategoryName: string) {
 
     }
 }

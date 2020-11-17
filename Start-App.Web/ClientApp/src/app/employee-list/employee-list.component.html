@@ -11,8 +11,7 @@
 </mat-form-field>
 
 
-<table mat-table [dataSource]="employees" matSort (matSortChange)="loadData()" matSortActive="{{defaultSortColumn}}"
-  matSortDirection="{{defaultSortOrder}}" class="mat-elevation-z8">
+<table mat-table [dataSource]="employees" matSort (matSortChange)="loadData()"  class="mat-elevation-z8">
   <ng-container matColumnDef="Id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
@@ -32,10 +31,10 @@
     <th mat-header-cell *matHeaderCellDef> 职位名称 </th>
     <td mat-cell *matCellDef="let element"> {{element.jobTitle}} </td>
   </ng-container>
-  <ng-container matColumnDef="BirthDate">
+  <!-- <ng-container matColumnDef="BirthDate">
     <th mat-header-cell *matHeaderCellDef> 生日 </th>
     <td mat-cell *matCellDef="let element"> {{element.birthDate}} </td>
-  </ng-container>
+  </ng-container> -->
   <ng-container matColumnDef="MaritalStatus">
     <th mat-header-cell *matHeaderCellDef> 婚姻状况 </th>
     <td mat-cell *matCellDef="let element"> {{element.maritalStatus}} </td>
@@ -44,12 +43,12 @@
     <th mat-header-cell *matHeaderCellDef> 性别 </th>
     <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
   </ng-container>
-  <ng-container matColumnDef="HireDate">
+  <!-- <ng-container matColumnDef="HireDate">
     <th mat-header-cell *matHeaderCellDef> 雇佣日期 </th>
     <td style="text-align: center;" mat-cell *matCellDef="let element"> {{element.hireDate}} </td>
-  </ng-container>
+  </ng-container> -->
 
-  <ng-container matColumnDef="SalariedFlag">
+  <!-- <ng-container matColumnDef="SalariedFlag">
     <th mat-header-cell *matHeaderCellDef> 是否发放薪水 </th>
     <td mat-cell *matCellDef="let element"> {{element.salariedFlag}} </td>
   </ng-container>
@@ -64,11 +63,16 @@
   <ng-container matColumnDef="CurrentFlag">
     <th mat-header-cell *matHeaderCellDef> 当前状态 </th>
     <td mat-cell *matCellDef="let element"> {{element.currentFlag}} </td>
-  </ng-container>
+  </ng-container> -->
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<mat-paginator [hidden]="!employees" (page)="getData($event)" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"
-  showFirstLastButtons></mat-paginator>
+<mat-paginator [hidden]="!employees" 
+               (page)="getData($event)" 
+               [pageIndex]="defaultPageIndex"
+               [pageSize]="defaultPageSize" 
+               [pageSizeOptions]="[5, 10, 20]" 
+               showFirstLastButtons>
+</mat-paginator>

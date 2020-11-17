@@ -13,6 +13,7 @@ using MediatR;
 using Start_App.Application.Common.Interfaces;
 using Start_App.Application.Common.Mappings;
 using Start_App.Application.Common.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Start_App.Application.HumanResources.Queries.V1.GetEmployeesWithPagination
 {
@@ -20,6 +21,8 @@ namespace Start_App.Application.HumanResources.Queries.V1.GetEmployeesWithPagina
     {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
+
+        public string SearchTerm { get; set; }
 
     }
 
@@ -35,8 +38,12 @@ namespace Start_App.Application.HumanResources.Queries.V1.GetEmployeesWithPagina
         }
         public async Task<PagedList<EmployeeDto>> Handle(GetEmployeesWithPaginationQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Employees
-                .OrderBy(e => e.BusinessEntityId)
+            var query = _context.Employees.AsNoTracking();
+            if (!string.IsNullOrEmpty(request.SearchTerm))
+            {
+                query = query.Where(x => x.JobTitle.Contains(request.SearchTerm));
+            }
+            return await query.OrderBy(e => e.BusinessEntityId)
                 .ProjectTo<EmployeeDto>(_mapper.ConfigurationProvider)
                 .PagedListAsync(request.PageIndex, request.PageSize);
         }
