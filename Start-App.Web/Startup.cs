@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -83,17 +84,6 @@ namespace Start_App
                 options.SubstituteApiVersionInUrl = true;
             });
 
-
-            //// database context
-            ////services.AddDbContext<AdventureWorks2017Context>(options =>
-            ////{
-            ////    options.UseLoggerFactory(_loggerFactory)
-            ////    .UseSqlServer(Configuration.GetConnectionString("SqlServerString"));
-            ////});
-
-            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-
             services.AddControllers();
 
         }
@@ -142,8 +132,8 @@ namespace Start_App
                 spa.Options.SourcePath = "ClientApp";
                 if (env.IsDevelopment())
                 {
-                    //spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

@@ -8,10 +8,7 @@ export abstract class BaseService {
   abstract getData<PagedList>(
     pageIndex: number,
     pageSize: number,
-    sortColumn: string,
-    sortOrder: string,
-    filterColumn: string,
-    filterQuery: string
+    searchQuery: string
   ): Observable<PagedList>;
 
   abstract get<T>(id: number): Observable<T>;
