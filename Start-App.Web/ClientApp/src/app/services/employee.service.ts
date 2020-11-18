@@ -1,7 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BaseService } from './base-service.service';
 
 
 export interface IEmployeeDto {
@@ -56,8 +55,6 @@ export class EmployeeDto implements IEmployeeDto {
     data["gender"] = this.gender;
     return data;
   }
-
-
 }
 
 export interface IPaginatedListOfEmployeeDto {
@@ -144,17 +141,17 @@ export interface ICreateEmployeeCommand {
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService
-  extends BaseService {
+export class EmployeeService {
   constructor(
-    http: HttpClient,
-    @Inject('BASE_URL') baseUrl: string) {
-    super(http, baseUrl);
+    private http: HttpClient,
+    @Inject('BASE_URL') private baseUrl: string) {
   }
 
-  getData<PagedList>(
-    pageIndex: number,
-    pageSize: number,
+  getData<PagedList>(pageIndex: number, 
+    pageSize: number, 
+    sortColumn: string,
+    sortOrder: string,
+    filterColumn: string,
     filterQuery: string): Observable<PagedList> {
     let url = this.baseUrl + 'api/v1/employees';
     let params = new HttpParams().set("pageIndex", pageIndex.toString()).set("pageSize", pageSize.toString());

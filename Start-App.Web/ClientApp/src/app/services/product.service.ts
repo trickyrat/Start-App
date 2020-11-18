@@ -26,7 +26,7 @@ export class ProductService {
   }
 
   // 获取产品
-  getProducts(rquest: RequestBase): Observable<Product[]> {
+  getProducts(): Observable<Product[]> {
     return this.httpClient.get<Product[]>(this.baseUrl + this.apiUrl);
   }
 

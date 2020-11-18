@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Employee } from '../models/employee';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -6,6 +6,8 @@ import { EmployeeDto, EmployeeService } from '../services/employee.service';
 import { MatSort } from '@angular/material/sort';
 import { PagedList } from '../models/pagedList';
 import { SelectionModel } from "@angular/cdk/collections";
+import { merge } from 'rxjs';
+import { startWith, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-employee-list',
@@ -13,32 +15,43 @@ import { SelectionModel } from "@angular/cdk/collections";
   styleUrls: ['./employee-list.component.css'],
   providers: [EmployeeService]
 })
-export class EmployeeListComponent
-  implements OnInit {
+export class EmployeeListComponent implements AfterViewInit {
   public displayedColumns: string[] = ['select', 'Id', 'NationalIdnumber', 'OrganizationLevel', 'JobTitle', 'MaritalStatus', 'Gender']
   public employees: MatTableDataSource<Employee>;
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
-  filterQuery: string = null;
-  selection = new SelectionModel<Employee>();
+  defaultSortColumn = "id";
+  defaultSortOrder = "asc";
+  defaultFilterColumn = "id";
+  defaultFilterQuery: string = null;
+  selection = new SelectionModel<Employee>(true, []);
+  isLoadingResults = true;
 
-
-  @Input() employee: Employee;
-
+  @Input() employee: Employee
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private service: EmployeeService) { }
 
-  ngOnInit() {
-    this.loadData(null);
+  ngAfterViewInit() {
+    this.loadData();
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    // merge(this.sort.sortChange, this.paginator.page)
+    // .pipe(startWith({}),
+    // switchMap(()=>{
+    //   this.isLoadingResults = true;
+    //   return this.loadData(,)
+    // }))
   }
 
-  loadData(query: string = null) {
+
+  loadData(query?: string, order?: string,) {
     var pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
     if (query) {
-      this.filterQuery = query;
+      this.defaultFilterQuery = query;
     }
     this.getData(pageEvent);
   }
@@ -49,17 +62,31 @@ export class EmployeeListComponent
     return numSelected === numRows;
   }
 
+  /**
+  * Select or deselect all rows.
+  */
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
       this.employees.data.forEach(row => this.selection.select(row));
   }
 
+  /**
+   * Get data from service
+   * @param event 
+   */
   getData(event: PageEvent) {
-    let filterQuery = (this.filterQuery) ? this.filterQuery : null;
+    let filterQuery = (this.defaultFilterQuery) ? this.defaultFilterQuery : null;
+    let filterColumn = (this.defaultFilterColumn) ? this.defaultFilterColumn : null;
+    let sortColumn = (this.defaultSortColumn) ? this.defaultSortColumn : null;
+    let sortOrder = (this.defaultSortOrder) ? this.defaultSortOrder : null;
+
     this.service.getData<PagedList<Employee>>(
       event.pageIndex,
       event.pageSize,
+      sortColumn,
+      sortOrder,
+      filterColumn,
       filterQuery)
       .subscribe(result => {
         this.paginator.length = result.totalCount;
@@ -67,10 +94,6 @@ export class EmployeeListComponent
         this.paginator.pageSize = result.pageSize;
         this.employees = new MatTableDataSource<Employee>(result.data);
       }, error => console.log(error));
-  }
-
-  addEmployee(employee: Employee) {
-
   }
 
 }
