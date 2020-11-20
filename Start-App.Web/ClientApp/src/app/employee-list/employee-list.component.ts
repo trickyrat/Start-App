@@ -10,7 +10,7 @@ import { merge } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-employee-list',
+  selector: 'employee-list',
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.css'],
   providers: [EmployeeService]

@@ -44,6 +44,11 @@ import { EmployeeService } from './services/employee.service';
 import { RequestCache, RequestCacheWithMap } from './services/request-cache.service';
 import { MessageService } from './services/message.service';
 import { EmployeeAddComponent } from './employee-list/employee-add/employee-add.component';
+import { NavMenuMComponent } from './nav-menu-m/nav-menu-m.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatListModule } from '@angular/material/list';
+import { PeopleTabComponent } from './people-tab/people-tab.component';
+import { NavItemComponent } from './navi-item/nav-item.component';
 
 
 @NgModule({
@@ -59,7 +64,10 @@ import { EmployeeAddComponent } from './employee-list/employee-add/employee-add.
     ProductDepartmentComponent,
     PriceDisplayComponent,
     ProductComponent,
-    EmployeeAddComponent
+    EmployeeAddComponent,
+    NavMenuMComponent,
+    PeopleTabComponent,
+    NavItemComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +92,9 @@ import { EmployeeAddComponent } from './employee-list/employee-add/employee-add.
     MatCardModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    LayoutModule,
+    MatListModule
   ],
   providers: [
     HttpErrorHandler,
