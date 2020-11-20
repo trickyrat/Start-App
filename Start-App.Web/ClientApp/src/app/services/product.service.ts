@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Product, ProductCategory, ProductSubcategory } from '../models/product';
 import { Observable } from 'rxjs';
-import { RequestBase } from '../models/request';
+import { PagedList } from '../models/pagedList';
 
 
 @Injectable({
@@ -26,8 +26,16 @@ export class ProductService {
   }
 
   // 获取产品
-  getProducts(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(this.baseUrl + this.apiUrl);
+  getProducts<PagedList>(subcategoryId?: number, filterQuery?: string): Observable<PagedList> {
+    let params: HttpParams = new HttpParams();
+    let url: string = this.baseUrl + this.apiUrl;
+    if (subcategoryId) {
+      params = params.set("subcategoryId", subcategoryId.toString());
+    }
+    if (filterQuery) {
+      params = params.set("filterQuery", filterQuery);
+    }
+    return this.httpClient.get<PagedList>(url, { params });
   }
 
 }

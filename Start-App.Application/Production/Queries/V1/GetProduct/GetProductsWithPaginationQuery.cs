@@ -18,9 +18,9 @@ namespace Start_App.Application.Production.Queries.V1.GetProduct
 {
     public class GetProductsWithPaginationQuery : IRequest<PagedList<ProductDto>>
     {
-        public int ProductSubcategoryId { get; set; }
+        public int SubcategoryId { get; set; }
 
-        public string SearchTerm { get; set; }
+        public string FilterQuery { get; set; }
 
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
@@ -38,13 +38,13 @@ namespace Start_App.Application.Production.Queries.V1.GetProduct
         public async Task<PagedList<ProductDto>> Handle(GetProductsWithPaginationQuery request, CancellationToken cancellationToken)
         {
             var query = _context.Products.AsQueryable();
-            if (request.ProductSubcategoryId > 0)
+            if (request.SubcategoryId > 0)
             {
-                query = query.Where(x => x.ProductSubcategoryId == request.ProductSubcategoryId);
+                query = query.Where(x => x.ProductSubcategoryId == request.SubcategoryId);
             }
-            if (!string.IsNullOrEmpty(request.SearchTerm))
+            if (!string.IsNullOrEmpty(request.FilterQuery))
             {
-                query = query.Where(x => x.Name.Contains(request.SearchTerm));
+                query = query.Where(x => x.Name.Contains(request.FilterQuery));
             }
             return await query.ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
                 .PagedListAsync(request.PageIndex, request.PageSize);

@@ -22,10 +22,16 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Ex. Silver">
+    </mat-form-field>
 </form>
 
 <p>Category: {{selectedCategoryId}}</p>
 <p>Subcategory: {{selectedSubcategoryId}}</p>
+<p>Name: {{filterQuery}}</p>
 
 <!-- <div>
     <app-product-list [productList]="products" (onProductSelected)="productWasSelected($event)"></app-product-list>
