@@ -35,6 +35,8 @@ namespace Start_App.Infrastructure.Persistence
             _domainEventService = domainEventService;
         }
 
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<AddressType> AddressTypes { get; set; }
         public virtual DbSet<AwbuildVersion> AwbuildVersions { get; set; }

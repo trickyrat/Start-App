@@ -6,14 +6,15 @@
 
 using System;
 using System.Collections.Generic;
-using Start_App.Domain.Common;
+using AutoMapper;
+using Start_App.Application.Common.Mappings;
+using Start_App.Domain.Entities.Books;
 using Start_App.Domain.Enums;
 
-namespace Start_App.Domain.Entities.Books
+namespace Start_App.Application.Books.Queries
 {
-    public class Book : AuditableEntity, IHasDomainEvent
+    public class BookDto : IMapFrom<Book>
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
 
         public BookType Type { get; set; }
@@ -22,9 +23,9 @@ namespace Start_App.Domain.Entities.Books
 
         public decimal Price { get; set; }
 
-        public ICollection<Author> Authors { get; set; }
-        public List<BookAuthor> BookAuthors { get; set; }
-
-        public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Book, BookDto>();
+        }
     }
 }

@@ -8,11 +8,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Start_App.Domain.Entities;
+using Start_App.Domain.Entities.Books;
 
 namespace Start_App.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
         public  DbSet<Address> Addresses { get; set; }
         public  DbSet<AddressType> AddressTypes { get; set; }
         public  DbSet<AwbuildVersion> AwbuildVersions { get; set; }

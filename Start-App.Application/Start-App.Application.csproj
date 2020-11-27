@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Books\Commands\" />
     <Folder Include="Person\V2\" />
-    <Folder Include="Production\V2\" />
   </ItemGroup>
 
   <ItemGroup>
