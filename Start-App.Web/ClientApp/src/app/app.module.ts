@@ -49,6 +49,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
 import { PeopleTabComponent } from './people-tab/people-tab.component';
 import { NavItemComponent } from './navi-item/nav-item.component';
+import { ProductCardComponent } from './product/product-card/product-card.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { NavItemComponent } from './navi-item/nav-item.component';
     EmployeeAddComponent,
     NavMenuMComponent,
     PeopleTabComponent,
-    NavItemComponent
+    NavItemComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,
