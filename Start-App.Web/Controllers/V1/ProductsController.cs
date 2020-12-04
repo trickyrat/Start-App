@@ -9,14 +9,14 @@ using Start_App.Application.Production.Queries.V1.GetProductSubcategory;
 
 namespace Start_App.Controllers.V1
 {
-    [ApiVersion("1")]
+    [ApiVersion("v1")]
     [OpenApiTag("Products", Description = "Production environment")]
     [ApiExplorerSettings(GroupName = "v1")]
     public class ProductsController : ApiController
     {
 
         [HttpGet]
-        [MapToApiVersion("1")]
+        [MapToApiVersion("v1")]
         public async Task<ActionResult<PagedList<ProductDto>>> Products([FromQuery] GetProductsWithPaginationQuery query)
         {
             return await Mediator.Send(query);
@@ -24,14 +24,14 @@ namespace Start_App.Controllers.V1
 
 
         [HttpGet("Category")]
-        [MapToApiVersion("1")]
+        [MapToApiVersion("v1")]
         public async Task<ActionResult<List<ProductCategoryDto>>> ProductCategoryList([FromRoute]GetProductCategoryQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpGet("Category/{id}")]
-        [MapToApiVersion("1")]
+        [MapToApiVersion("v1")]
         public async Task<ActionResult<List<ProductSubcategoryDto>>> ProductSubCategory([FromRoute]GetProductSubcategoryQuery query)
         {
             return await Mediator.Send(query);

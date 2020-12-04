@@ -14,7 +14,7 @@ namespace Start_App.Application.Common.Models
         public int PageSize { get; private set; }
 
         /// <summary>
-        /// 当前页码
+        /// 当前页码  Angular Material 以0开始
         /// </summary>
         public int PageIndex { get; private set; }
 
@@ -36,12 +36,12 @@ namespace Start_App.Application.Common.Models
         /// <summary>
         /// 是否有上一页
         /// </summary>
-        public bool HasPreviousPage => PageIndex > 1;
+        public bool HasPreviousPage => TotalPages > 0 && PageIndex > 0 && PageIndex < TotalPages;
 
         /// <summary>
         /// 是否有下一页
         /// </summary>
-        public bool HasNextPage => PageIndex < TotalPages;
+        public bool HasNextPage => TotalPages > 0 && PageIndex < TotalPages - 1;
 
 
         public PagedList(List<T> data, int total, int pageIndex, int pageSize)

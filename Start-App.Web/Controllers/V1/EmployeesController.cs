@@ -12,28 +12,28 @@ using Start_App.Application.HumanResources.Queries.V1.GetEmployeesWithPagination
 
 namespace Start_App.Controllers.V1
 {
-    [ApiVersion("1")]
+    [ApiVersion("v1")]
     [OpenApiTag("Employees", Description = "Production environment")]
     //[Authorize]
     [ApiExplorerSettings(GroupName = "v1")]
     public class EmployeesController : ApiController
     {
         [HttpGet]
-        [MapToApiVersion("1")]
+        [MapToApiVersion("v1")]
         public async Task<ActionResult<PagedList<EmployeeDto>>> GetEmployeesWithPagination([FromQuery] GetEmployeesWithPaginationQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpGet("{id}")]
-        [MapToApiVersion("1")]
+        [MapToApiVersion("v1")]
         public async Task<ActionResult<EmployeeDetailDto>> GetEmployee([FromRoute]GetEmployeeDetailQuery query)
         {
             return await Mediator.Send(query);
         }
 
         [HttpPost]
-        [MapToApiVersion("1")]
+        [MapToApiVersion("v1")]
         public async Task<ActionResult<int>> Create(CreateEmployeeCommand command)
         {
             return await Mediator.Send(command);
@@ -41,7 +41,7 @@ namespace Start_App.Controllers.V1
 
 
         [HttpPut("{id}")]
-        [MapToApiVersion("1")]
+        [MapToApiVersion("v1")]
         public async Task<IActionResult> Update(int id, UpdateEmployeeCommand command)
         {
             if (id != command.BusinessEntityId)
@@ -53,7 +53,7 @@ namespace Start_App.Controllers.V1
         }
 
         [HttpDelete("{id}")]
-        [MapToApiVersion("1")]
+        [MapToApiVersion("v1")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             await Mediator.Send(new DeleteEmployeeCommand { BusinessEntityId = id });

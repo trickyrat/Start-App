@@ -3,14 +3,14 @@ using NSwag.Annotations;
 
 namespace Start_App.Controllers.V1
 {
-    [ApiVersion("1")]
+    [ApiVersion("v1")]
     [OpenApiTag("Employees", Description = "Production environment")]
     [ApiExplorerSettings(GroupName = "v1")]
     public class PeopleController : ApiController
     {
 
         //[HttpGet]
-        //[MapToApiVersion("1")]
+        //[MapToApiVersion("v1")]
         //public async Task<ActionResult<PagedList<PersonDto>>> GetPeopleWithPagination(GetPeopleWithPaginationQuery query)
         //{
         //    return Mediator.Send(query);

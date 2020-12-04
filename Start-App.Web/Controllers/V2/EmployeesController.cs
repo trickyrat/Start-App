@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Start_App.Controllers.V2
 {
-    [ApiVersion("2")]
+    [ApiVersion("v2")]
     [OpenApiTag("Employees", Description = "Development environment")]
     [ApiExplorerSettings(GroupName = "v2")]
     public class EmployeesController : ApiController
     {
         //[HttpGet]
         //[Produces("application/json")]
-        //[MapToApiVersion("2")]
+        //[MapToApiVersion("v2")]
         //public async Task<IActionResult> Employees(GetEmployeesWithPaginationQuery query)
         //{
         //    return await Mediator.Send(query);
@@ -22,7 +22,7 @@ namespace Start_App.Controllers.V2
 
         //[HttpGet("{id}")]
         //[Produces("application/json")]
-        //[MapToApiVersion("2")]
+        //[MapToApiVersion("v2")]
         //[ProducesResponseType(typeof(Employee), 200)]
         //[ProducesResponseType(400)]
         //[ProducesResponseType(404)]
