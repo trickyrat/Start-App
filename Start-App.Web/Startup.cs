@@ -94,6 +94,9 @@ namespace Start_App
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
+                app.UseOpenApi();
+                app.UseSwaggerUi3();
             }
             else
             {
@@ -111,29 +114,28 @@ namespace Start_App
                 app.UseSpaStaticFiles();
             }
 
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
+            
 
             app.UseRouting();
+
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                     name: "default",
-                     pattern: "{controller}/{action=Index}/{id?}");
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
 
-            //app.UseAuthorization();
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
-                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

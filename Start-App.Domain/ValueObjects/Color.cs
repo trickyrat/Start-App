@@ -14,57 +14,57 @@ using Start_App.Domain.Exceptions;
 
 namespace Start_App.Domain.ValueObjects
 {
-    public class Colour : ValueObject
+    public class Color : ValueObject
     {
-        static Colour()
+        static Color()
         {
         }
 
-        private Colour()
+        private Color()
         {
         }
 
-        private Colour(string code)
+        private Color(string code)
         {
             Code = code;
         }
 
-        public static Colour From(string code)
+        public static Color From(string code)
         {
-            var colour = new Colour { Code = code };
+            var Color = new Color { Code = code };
 
-            if (!SupportedColours.Contains(colour))
+            if (!SupportedColors.Contains(Color))
             {
                 throw new UnspportedColorException(code);
             }
 
-            return colour;
+            return Color;
         }
 
-        public static Colour White => new Colour("#FFFFFF");
+        public static Color White => new Color("#FFFFFF");
 
-        public static Colour Red => new Colour("#FF5733");
+        public static Color Red => new Color("#FF5733");
 
-        public static Colour Orange => new Colour("#FFC300");
+        public static Color Orange => new Color("#FFC300");
 
-        public static Colour Yellow => new Colour("#FFFF66");
+        public static Color Yellow => new Color("#FFFF66");
 
-        public static Colour Green => new Colour("#CCFF99 ");
+        public static Color Green => new Color("#CCFF99 ");
 
-        public static Colour Blue => new Colour("#6666FF");
+        public static Color Blue => new Color("#6666FF");
 
-        public static Colour Purple => new Colour("#9966CC");
+        public static Color Purple => new Color("#9966CC");
 
-        public static Colour Grey => new Colour("#999999");
+        public static Color Grey => new Color("#999999");
 
         public string Code { get; private set; }
 
-        public static implicit operator string(Colour colour)
+        public static implicit operator string(Color Color)
         {
-            return colour.ToString();
+            return Color.ToString();
         }
 
-        public static explicit operator Colour(string code)
+        public static explicit operator Color(string code)
         {
             return From(code);
         }
@@ -74,7 +74,7 @@ namespace Start_App.Domain.ValueObjects
             return Code;
         }
 
-        protected static IEnumerable<Colour> SupportedColours
+        protected static IEnumerable<Color> SupportedColors
         {
             get
             {

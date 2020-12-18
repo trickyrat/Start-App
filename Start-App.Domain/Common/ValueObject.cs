@@ -15,12 +15,11 @@ namespace Start_App.Domain.Common
     public abstract class ValueObject
     {
         protected static bool EqualOperator(ValueObject left, ValueObject right)
-        {
-            if (left is null ^ right is null)
+        { 
+            if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))
             {
                 return false;
             }
-
             return left?.Equals(right) != false;
         }
 

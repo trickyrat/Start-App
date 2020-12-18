@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
@@ -10,21 +10,18 @@
     <StartupObject>Start_App.Program</StartupObject>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="5.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
-    <PackageReference Include="NSwag.AspNetCore" Version="13.9.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.9.4" />
   </ItemGroup>
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
@@ -62,4 +59,19 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+      <TypeScriptTarget>ES5</TypeScriptTarget>
+      <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+      <TypeScriptModuleKind />
+      <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+      <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+      <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+      <TypeScriptOutFile />
+      <TypeScriptOutDir />
+      <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+      <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+      <TypeScriptSourceMap>True</TypeScriptSourceMap>
+      <TypeScriptMapRoot />
+      <TypeScriptSourceRoot />
+    </PropertyGroup>
 </Project>

@@ -26,19 +26,12 @@ namespace Start_App.Infrastructure
 
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            if (configuration.GetValue<bool>("UseInMemoryDatabase"))
-            {
-                services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseInMemoryDatabase("MemoryDb"));
-            }
-            else
-            {
-                services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseLoggerFactory(_loggerFactory)
-                    .UseSqlServer(
-                        configuration.GetConnectionString("DefaultConnection"),
-                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-            }
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseLoggerFactory(_loggerFactory)
+                .UseSqlServer(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
