@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Start_App.Controllers.V2
 {
-    [ApiVersion("v2")]
+    [ApiVersion("2")]
     [OpenApiTag("Employees", Description = "Development environment")]
     [ApiExplorerSettings(GroupName = "v2")]
     public class EmployeesController : ApiController

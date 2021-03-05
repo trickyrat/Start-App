@@ -3,7 +3,7 @@ using NSwag.Annotations;
 
 namespace Start_App.Controllers.V1
 {
-    [ApiVersion("1.0")]
+    [ApiVersion("1")]
     [OpenApiTag("Employees", Description = "Production environment")]
     [ApiExplorerSettings(GroupName = "v1")]
     public class PeopleController : ApiController

@@ -20,7 +20,7 @@ Build modern web with ASP.NET CORE WEBAPI 5.0 + Angular 11 + OAuth2.0 + SwaggerU
 
 ## Prequirements
 
-> .Net Core SDK 3.1 or higher  
+> .Net Core SDK 5.0
 
 ## Usage
 

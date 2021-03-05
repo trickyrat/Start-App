@@ -38,6 +38,15 @@ namespace Start_App
             services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 
 
+            // api version control
+            services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ApiVersionReader = new UrlSegmentApiVersionReader();
+                options.ReportApiVersions = true;
+            });
+
+
             services.AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
                     .AddFluentValidation();
@@ -71,20 +80,8 @@ namespace Start_App
                 document.UseControllerSummaryAsTagDescription = true;
             });
 
-            // api version control
-            services.AddApiVersioning(options =>
-            {
-                options.AssumeDefaultVersionWhenUnspecified = true;
-                options.ApiVersionReader = new UrlSegmentApiVersionReader();
-                options.ReportApiVersions = true;
-            })
-            .AddVersionedApiExplorer(options =>
-            {
-                options.GroupNameFormat = "'v'VVV"; //"'v'major[.minor][-status]"
-                options.SubstituteApiVersionInUrl = true;
-            });
 
-            services.AddControllers();
+            //services.AddControllers();
 
         }
 
@@ -124,9 +121,10 @@ namespace Start_App
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                //endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
 

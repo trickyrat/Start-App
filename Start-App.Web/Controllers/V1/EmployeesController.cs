@@ -19,7 +19,7 @@ namespace Start_App.Controllers.V1
     public class EmployeesController : ApiController
     {
         [HttpGet]
-        [MapToApiVersion("1.0")]
+        [MapToApiVersion("1")]
         public async Task<ActionResult<PagedList<EmployeeDto>>> GetEmployeesWithPagination([FromQuery] GetEmployeesWithPaginationQuery query)
         {
             return await Mediator.Send(query);
